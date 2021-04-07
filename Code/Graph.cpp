@@ -2,8 +2,11 @@
  * This program will hold the methods to 
  * Dijkstras algorithm and be run with
  * ./dijikstra <graph> <direction> 
+ * 
+ * FOR REPORT PAGE 589
  */
 
+#include "Graph.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -44,3 +47,70 @@ using namespace std;
 //find <source> <destination> <flag>
 
 //insert method
+/*
+void	Graph::Dijkstra(int n, int w[][N], Edge* f, int len[], int source)
+{
+   //intializing values
+	int i, x, vnear, min;
+   Edge::Edge e;
+   x = 0;
+
+   int visted[n], length[n];
+   length[0] = -1;
+   for(i = 0; i < n; i++)
+   {
+      //check if i != source-1
+      if(i != source-1)
+      {
+         //if i!= the source, it sets the visted[i] to source -1 
+         visted[i] = source -1;
+         length[i] = w[source-1][i];
+      }
+
+   }
+
+   //while x < n 
+   while(x < n)
+   {
+      min = INF; 
+      for(i = 0; i < n; i++)
+      {
+         if(length[i] >= 0 && length[i] < min)
+         {
+            min = length[i];
+            vnear = i;
+         }
+      }
+
+      //add the edge's source to the visited[vnear]
+      e.source = visited[vnear];
+      e.end = vnear;
+      
+      //set the edge weight to min
+      e.weight = min;
+
+      //perform check to find the lengths
+      if(e.source == (source - 1))
+      {
+         len[e.end] = 1;
+      }
+      else
+      {
+         len[e.end] = len[e.source] + 1
+      }
+      F[y++] = e; //adds the edge to the array of finished edges (Edge F)
+
+   }
+
+
+}*/
+
+
+adjListNode::adjListNode* newAdjListNode(int destination, int weight)
+{
+   /*adjList* newNode = new adjListNode();
+   newNode->destinaton = destination;
+   newNode->weight = weight;
+   newNode->next = NULL;
+   return newNode;*/
+}
