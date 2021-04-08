@@ -5,7 +5,7 @@
 */
 
 
-#include "Heap.h"
+#include "Heap.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -46,7 +46,7 @@ void HEAP::heapPrint(HEAP* a)
     << a->size << endl;
 
     //print the HEAP from size 1
-    ElementT arr = a->getH();
+    pELEMENT arr = a->getH();
     for(int i = 1; i <= a->size; i++)
     {
         //if key is == 0, break the for loop
@@ -83,9 +83,9 @@ void swap(int *x, int *y)
 } 
 
 //elementSwap 
-void eSwap(ElementT *x, ElementT *y) 
+void eSwap(pELEMENT *x, pELEMENT *y) 
 { 
-	ElementT temp = *x; 
+	pELEMENT temp = *x; 
 	*x = *y; 
 	*y = temp; 
 } 
@@ -130,7 +130,7 @@ void HEAP::buildMinHeap(HEAP* a)//buildHeap(pointer to array heap?)
 //builds minHeap 
 void HEAP::minHeapify(HEAP * a, int i)
 {
-	//ElementT arr = a->getH();
+	//pELEMENT arr = a->getH();
 	//int l = 2*i + 1;
 	//int r = 2*i + 2;
 
@@ -303,11 +303,20 @@ void decreaseKey(HEAP* a, int i, int value)
 /******************* End Project 2 *************************/
 
 
+/******************* Project 3 methods*************************/
 
 
+/* FROM VIDEO
+int	Heap::xueDecreaseKey(HEAP *a, int pos, int newKey)
+{
+	if(pos<1 || pos > a->size || newKey >= a->H[pos]->key)
+	{
+		printf("Error in DecreaseKey\n");
+		return 1;
+	}
 
-
-
-
-
-
+	a->H[pos]->key = newKey;
+	//MovingUp(a, pos);
+	return 0;
+}
+*/
