@@ -1,23 +1,27 @@
 /** 
  * Author: Brandon Phillips
  * Function: Header file for Heap.cpp which holds
- * all the methods and variables for classes ELEMENT, ElementT, and HEAP
+ * all the methods and variables for classes ELEMENT, pELEMENT, and HEAP
 */
 
 
-#ifndef heap_h
-#define heap_h
+#ifndef heap_hpp
+#define heap_hpp
 
 /** Element class that holds keys of type integer*/
 class ELEMENT
 {
     public:
-    int key;
-
+    //int key;
+    float key;
+    int vertex; //points to the vertex V[vertex]
 };
 
+//typedef ELEMENT *pELEMENT;
+
+
 //pointer to element class to be used with an array
-typedef ELEMENT *ElementT;
+typedef ELEMENT *pELEMENT;
 
 
 //heap class
@@ -27,8 +31,9 @@ class HEAP
     public: 
     int capacity;
     int size;
-    ElementT H; 
-    int heapifyCount;
+    pELEMENT H;
+     
+    int heapifyCount;   //project 2 don't need
 
     //~~~constructors~~~~//
     //default
@@ -54,13 +59,13 @@ class HEAP
         //return this->size;
         return this->size;
     }
-    ElementT getH()
+    pELEMENT getH()
     {
         return this->H;
     } 
     
     //setters methods
-    void setH(ElementT sH)
+    void setH(pELEMENT sH)
     {
         H = sH;
     }
@@ -90,6 +95,11 @@ class HEAP
     void buildMinHeap(HEAP* a);
     void heapSort(HEAP* a);
     ELEMENT getHeapMin(HEAP* a);
+
+//====================================================//
+
+    //project 3 methods
+    int xueDecreaseKey(HEAP *a, int pos, int newKey);
 
 
 };

@@ -18,7 +18,7 @@
 using namespace std;
 
 
-int nextCommand(int *n, int *f)
+int nextCommand(int *n, int *d, int *f)
 {
     char c;
     while(1){
@@ -29,7 +29,29 @@ int nextCommand(int *n, int *f)
             continue;
         }
 
-        //S input, Stops the program
+        //find <source> <destination> <flag> 
+        //flag == 1 prints information for each insertion, deletion and decrease-heap
+        if (c == 'Find' || c == 'find')
+        {
+            break;
+        }
+
+        //write path <s> <d>
+        if (c == 'Write' || c == 'write')
+        {
+            scanf("%d", n); //n == s
+            scanf("%d", d); //d == d
+            break;
+        }
+
+        //stop
+        if (c == 'Stop' || c == 'stop')
+        {
+            break;
+        }
+
+
+        /*//S input, Stops the program
         if (c == 'S' || c == 's')
         {
             break;
@@ -88,8 +110,9 @@ int nextCommand(int *n, int *f)
             //scan for value
             scanf("%d", f);
             break;
-        }
+        }*/
         
+        //error handling
         printf("Warning in nextCommand: invalid input\n");
         break;
         

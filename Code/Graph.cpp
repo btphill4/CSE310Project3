@@ -178,25 +178,61 @@ int	dijkstra(int n, pNODE *A, int s, int t, int f_i, int f_d, int f_u, int f_p)
 
 /*
 G = graph
-s = soource node
-t = ?
+s = source node
+t = destination node
+Q = HEAP 
+
+u = extracted min node
+v = vector or node?
+
+return 0; destionation NODE found?
+return 1; destination NODE not found?
+
+colors? = white = unchecked, grey = in process, black = checked NOT SURE
+
+flow of dijsktra
+1: sets each vertex inside of V[G] to white
+2: sets the source node to grey and inserts it into an empty Q (HEAP)
+3: Repeatedly extract the min node(u) and set the extracted Node to black(checked)
+   if the extracted node (u) is equal to the destination node (t)
+      if yes, return 0, else continue to look (relaxtion method)
+4: relaxtion method: for each vertex inside of the extracted node (u) adjacency list
+   if the vertex's color is white(unchecked), change the distance of the vertex, set v.pi to u
+      then set it equal to grey and insert it into the Q (HEAP)
+   else if the weight between the unchecked node is greater than the weight 
+      set the weight to V and set u.pi to u
+      then perform decrease key using current vertex v and v.dist
+5: repeat until found or not found and return 0 or 1 
+                     
 int dijkstra-SP(G, s, t) 
 {
    for each v (inside of) V[G] do
       v.color = white; v.d = INF; v.pi = nil;
+   
    s.dist = 0; s.color = grey; insert s into initially empty Q
-   while Q != empty do
-      u = Extract-Min(Q)
+
+   while Q != empty do{
+      //extract the min element from HEAP
+      u = Extract-Min(Q)   
       u.color = black;
-      if (u == t) 
-         return 0;
-      for each v (inside of) u.adj do 
+
+      //if minNode is equal to the destination node
+      if (u == t)          
+      {
+         return 0;   //node is found 
+      }
+
+      //relaxtion method
+      for each v (inside of) u.adj do  
          if(v.color == white) do
             v.d = u.d + w(u,v); v.pi = u; v.color = grey;
             insert v to Q
+         
+         //if the weight is heigher
          else if (v.d > u.d + w(u,v)) do
             v.d = u.d + w(u,v); u.pi = u;
             DecreaseKey(v,v.d)
    return 1;
+   }
 }
 */
