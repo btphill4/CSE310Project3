@@ -42,11 +42,10 @@ using namespace std;
              if the destination is extracted from the heap, your algorthims should not perform any relaxations
         
 */
-
 //find method
 //find <source> <destination> <flag>
 
-//insert method
+//insert method WRONG
 /*
 void	Graph::Dijkstra(int n, int w[][N], Edge* f, int len[], int source)
 {
@@ -131,7 +130,7 @@ not sure above parts
             if(f_i == 1)
             {
                //print insertion information
-               printf("Inserted V[%d], dist=%12.6f\n", v, V[v].dist);
+               printf("Inserted V[%d], dist=%12.4f\n", v, V[v].dist);
             }
          }
          else if(V[v].dist > V[u].dist + w)
@@ -139,7 +138,7 @@ not sure above parts
             if(f_u == 1)
             {
                //print insertion information
-               printf("Updated V[%d].dist from %12.6f to %12.6f\n", v, V[v].dist, V[u].dist+w);
+               printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v].dist, V[u].dist+w);
             }
             V[v].dist = V[u].dist + w;
             V[v].pi = u;
@@ -161,7 +160,7 @@ not sure above parts
          }
          else
          {
-            printf("V[%7d].dist= %12.6f, ", v, V[v].dist);
+            printf("V[%7d].dist= %12.4f, ", v, V[v].dist);
          }
          printf("V[%7d].pi=%d, ", v, V[v].pi);
          printf("V[%7d].pos=%d\n", v, V[v].pos);
@@ -176,3 +175,28 @@ int	dijkstra(int n, pNODE *A, int s, int t, int f_i, int f_d, int f_u, int f_p)
 {
 	
 }
+
+/*
+G = graph
+s = soource node
+t = ?
+int dijkstra-SP(G, s, t) 
+{
+   for each v (inside of) V[G] do
+      v.color = white; v.d = INF; v.pi = nil;
+   s.dist = 0; s.color = grey; insert s into initially empty Q
+   while Q != empty do
+      u = Extract-Min(Q)
+      u.color = black;
+      if (u == t) 
+         return 0;
+      for each v (inside of) u.adj do 
+         if(v.color == white) do
+            v.d = u.d + w(u,v); v.pi = u; v.color = grey;
+            insert v to Q
+         else if (v.d > u.d + w(u,v)) do
+            v.d = u.d + w(u,v); u.pi = u;
+            DecreaseKey(v,v.d)
+   return 1;
+}
+*/
