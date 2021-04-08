@@ -8,12 +8,11 @@
 #include "Heap.h"
 #include "Graph.hpp"
 #include <stdlib.h>
-#include <iostream>
 #include <stdio.h>
-#include <math.h>
-#include <iostream>
-#include <fstream>
-#include<string.h>      //string class
+#include <string.h> //string class
+//#include <math.h>
+//#include <iostream>
+//#include <fstream>
 using namespace std;
 
 /**
@@ -33,6 +32,38 @@ w(u,v) = weight of u and v
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
  */
 
+//From Xue video
+VERTEX *V;
+
+int main(int argc, char *argv[])
+{
+    FILE *ifile;
+
+    pNODE *A;
+    pNODE node;
+
+    char word[256];
+    char word2[256];
+    int n, m, directed_graph, i;
+    int s, s_new, t, t_new, source, source_new, destination, destination_new;
+    int u, v, edge_id, flag, flag_new;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 int main(int argc, char** args) //int argc, char** args
 {
     //used to get direction from commandline
@@ -52,7 +83,7 @@ int main(int argc, char** args) //int argc, char** args
     {
         return 1;                  //else returns an error
     }
-
+*/
     /**
     From Xue Slides
 
@@ -99,7 +130,7 @@ int main(int argc, char** args) //int argc, char** args
 
 
     */
-
+/*   
    //Files for reading and writing
     std::ifstream ifile("input.txt");
     std::ifstream jfile("HEAPinput.txt");
@@ -212,14 +243,14 @@ int main(int argc, char** args) //int argc, char** args
                     printf("Error: heap is NULL\n");
                     break;
                 }
-                //size check
+                //size check */
                 /*if(mainHeap->size == 0)
                 {
                     printf("Error: heap is NULL\n");
                     break;
                 }*/
                 //print function
-                mainHeap->heapPrint(mainHeap);
+/*                mainHeap->heapPrint(mainHeap);
                 break;
 
             //W: input, writes the array and commands to a file
@@ -370,3 +401,4 @@ int main(int argc, char** args) //int argc, char** args
     }//end while
 exit(0);
 }//end of main
+*/
