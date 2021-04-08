@@ -104,13 +104,75 @@ void	Graph::Dijkstra(int n, int w[][N], Edge* f, int len[], int source)
 
 
 }*/
+/*
+Xue's code
 
+not sure above parts
+{ //full class brackets
 
-adjListNode::adjListNode* newAdjListNode(int destination, int weight)
+   { //method unfinished above PRINT METHOD I THINK
+
+      node = A[u]l
+      while(node) 
+      {
+         v = node->v;
+         w = node->w;
+         if(V[v].color == 0)
+         {
+            V[v].dist = V[u].dist + w;
+            V[v].pi = u;
+            V[v].color = 1;
+            //printf("V[d].color to 1\n" , v);
+            V[v].pos = heap->size+1;
+            element = (ELEMENT *) malloc(sizeof(ELEMENT));
+            element->vertex = v;
+            element->key = V[v].dist;
+            Insert(heap, element);
+            if(f_i == 1)
+            {
+               //print insertion information
+               printf("Inserted V[%d], dist=%12.6f\n", v, V[v].dist);
+            }
+         }
+         else if(V[v].dist > V[u].dist + w)
+         {
+            if(f_u == 1)
+            {
+               //print insertion information
+               printf("Updated V[%d].dist from %12.6f to %12.6f\n", v, V[v].dist, V[u].dist+w);
+            }
+            V[v].dist = V[u].dist + w;
+            V[v].pi = u;
+            pos = V[v].pos;
+            DecreaseKey(heap, pos, V[v].dist);
+         }
+         node = node -> next;
+      }
+   }
+
+   //print method?
+   if(f_p ==1)
+   {
+      for(v=1; v <= n; v++)
+      {
+         if(V[v].color == 0)
+         {
+            printf("V[%7d].dist=    inifinity, ", v);
+         }
+         else
+         {
+            printf("V[%7d].dist= %12.6f, ", v, V[v].dist);
+         }
+         printf("V[%7d].pi=%d, ", v, V[v].pi);
+         printf("V[%7d].pos=%d\n", v, V[v].pos);
+      }
+   }
+
+   return 0;
+}//end Xue slides
+*/
+
+int	dijkstra(int n, pNODE *A, int s, int t, int f_i, int f_d, int f_u, int f_p)
 {
-   /*adjList* newNode = new adjListNode();
-   newNode->destinaton = destination;
-   newNode->weight = weight;
-   newNode->next = NULL;
-   return newNode;*/
+	
 }

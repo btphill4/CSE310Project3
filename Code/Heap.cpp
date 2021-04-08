@@ -300,6 +300,8 @@ void decreaseKey(HEAP* a, int i, int value)
 	 */
 }
 
+/******************* End Project 2 *************************/
+
 
 
 
