@@ -243,3 +243,9 @@ if(V[v].d > V[u].d + w)
    DecreaseKey(heap, pos, V[v].d);
 }
 */
+
+
+int	dijkstra(pVERTEX v[G], pNODE *A, int destination, int f)
+{
+	
+}
