@@ -19,7 +19,7 @@ using namespace std;
 ./dijkstra <graph> <direction>
 
 Text File Format:
-int n =
+int n = 
 int m = 
 each line represents an edge 
 u = source vertex node
@@ -32,8 +32,6 @@ w(u,v) = weight of u and v
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
  */
 
-//From Xue video
-VERTEX *V;
 
 int main(int argc, char *argv[])
 {
@@ -60,6 +58,7 @@ int main(int argc, char *argv[])
 
     pNODE *A;
     pNODE node;
+    pVERTEX *V;
 
     char word[256];
     char word2[256];
@@ -67,7 +66,32 @@ int main(int argc, char *argv[])
     int s, s_new, t, t_new, source, source_new, destination, destination_new;
     int u, v, edge_id, flag, flag_new;
 
-    
+    /* more code between these */
+
+    //close the input file;
+    fclose(ifile);
+
+    source = 0;
+    destination = 0;
+
+    //creates V[] and A[]
+    V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
+    if(!V)
+    {
+        printf("Error: calloc failure.\n");
+        exit(1);
+    }
+
+    //for int n
+    A = (pNODE *) calloc(n+1, sizeof(pNODE));
+    if(!A)
+    {
+        printf("Error: calloc failure.\n");
+        exit(1);
+    }
+
+    //Query Loop
+
 }
 
 

@@ -13,8 +13,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Util.h"
-#include "Heap.h"
+#include "Util.hpp"
+#include "Heap.hpp"
 using namespace std;
 
 

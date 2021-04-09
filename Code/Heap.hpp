@@ -5,8 +5,14 @@
 */
 
 
-#ifndef heap_hpp
-#define heap_hpp
+#ifndef Heap_hpp
+#define Heap_hpp
+#include <stdio.h>
+#include "Graph.hpp"
+
+//Of type VERTEX so it hold VERTEX elements
+typedef VERTEX ELEMENT;
+typedef VERTEX *pELEMENT;
 
 /** Element class that holds keys of type integer*/
 //MAY NEED TO CHANGE TO STRUCTS CAUSE XUE CODE 
@@ -22,7 +28,7 @@ class ELEMENT
 
 
 //pointer to element class to be used with an array
-typedef ELEMENT *pELEMENT;
+//typedef ELEMENT *pELEMENT;
 
 
 //heap class
@@ -32,7 +38,8 @@ class HEAP
     public: 
     int capacity;
     int size;
-    pELEMENT H;
+    //pELEMENT H;     //array of pointers to elements(vertices)
+    pELEMENT *H; //should be this one 
      
     int heapifyCount;   //project 2 don't need
 
@@ -60,7 +67,7 @@ class HEAP
         //return this->size;
         return this->size;
     }
-    pELEMENT getH()
+   /* pELEMENT getH()
     {
         return this->H;
     } 
@@ -69,7 +76,7 @@ class HEAP
     void setH(pELEMENT sH)
     {
         H = sH;
-    }
+    }*/
 
     void setCapacity(int c)
     {
@@ -100,6 +107,7 @@ class HEAP
 //====================================================//
 
     //project 3 methods
+    void heapFree(HEAP *a);
     int xueDecreaseKey(HEAP *a, int pos, int newKey);
     void MovingUp (HEAP *a, int pos);
 

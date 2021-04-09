@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
-#include <math.h>
+//#include <math.h>
 using namespace std;
 
 /* method to read in an edge weighed graph G = (V,E,w) from text file
@@ -111,11 +111,13 @@ not sure above parts
 
    { //method unfinished above PRINT METHOD I THINK
 
-      node = A[u]l
+      node = A[u];
       while(node) 
       {
          v = node->v;
          w = node->w;
+
+         //relaxtion method 
          if(V[v].color == 0)
          {
             V[v].dist = V[u].dist + w;
@@ -184,7 +186,7 @@ v = vector or node?
 return 0; destionation NODE found?
 return 1; destination NODE not found?
 
-colors? = white = unchecked, grey = in process, black = checked NOT SURE
+colors = white = unchecked, grey = in process, black = checked NOT SURE
 
 flow of dijsktra
 1: sets each vertex inside of V[G] to white
@@ -200,7 +202,7 @@ flow of dijsktra
       then perform decrease key using current vertex v and v.dist
 5: repeat until found or not found and return 0 or 1 
                      
-int dijkstra-SP(G, s, t) 
+int dijkstra-SP(G, s, t, f) 
 {
    for each v (inside of) V[G] do
       v.color = white; v.d = INF; v.pi = nil;
