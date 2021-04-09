@@ -306,17 +306,45 @@ void decreaseKey(HEAP* a, int i, int value)
 /******************* Project 3 methods*************************/
 
 
-/* FROM VIDEO
-int	Heap::xueDecreaseKey(HEAP *a, int pos, int newKey)
+
+int	HEAP::xueDecreaseKey(HEAP* a, int pos, int newKey)
 {
+	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
 	if(pos<1 || pos > a->size || newKey >= a->H[pos]->key)
 	{
 		printf("Error in DecreaseKey\n");
 		return 1;
 	}
 
+	//else key = newKey
 	a->H[pos]->key = newKey;
-	//MovingUp(a, pos);
+	MovingUp(a, pos);
 	return 0;
 }
-*/
+
+void HEAP::MovingUp (HEAP* a, int pos)
+{
+	//declare variables
+	int parent;
+	pELEMENT temp; 
+
+	parent = pos/2; 
+
+
+	if(pos>1 && a->H[pos]->key < a->H[parent]->key)
+	{
+		temp = a->H[pos];
+		a->H[pos] = a->H[parent];
+		a->H[parent] = temp;
+
+		//go to vertex array and update the pos there too
+		V[a->H[pos]->vertex].pos = pos;
+		V[a->H[parent]->vertex].pos = parent;
+
+		MovingUp(a,parent); 
+	}
+
+}
+
+
+

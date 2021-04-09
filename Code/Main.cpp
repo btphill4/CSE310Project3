@@ -37,6 +37,25 @@ VERTEX *V;
 
 int main(int argc, char *argv[])
 {
+    //used to get direction from commandline
+    /*string direction;
+    for(int i = 0; i <argc; i++) {
+        printf("%d: %s\n", i, args[i]);
+    } 
+    if(strcmp(args[2], "insertion") ==0 )
+    {
+        direction = "directed";              //set sorting string to value used in left shift
+    }
+    else if (strcmp(args[2], "quick") ==0 )
+    {
+       direction = "undirected";               //set sorting string to value used in left shift
+    }
+    else
+    {
+        return 1;                  //else returns an error
+    }*/
+
+    //start xue code
     FILE *ifile;
 
     pNODE *A;
@@ -48,6 +67,7 @@ int main(int argc, char *argv[])
     int s, s_new, t, t_new, source, source_new, destination, destination_new;
     int u, v, edge_id, flag, flag_new;
 
+    
 }
 
 

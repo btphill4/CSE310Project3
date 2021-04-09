@@ -9,6 +9,7 @@
 #define heap_hpp
 
 /** Element class that holds keys of type integer*/
+//MAY NEED TO CHANGE TO STRUCTS CAUSE XUE CODE 
 class ELEMENT
 {
     public:
@@ -100,7 +101,7 @@ class HEAP
 
     //project 3 methods
     int xueDecreaseKey(HEAP *a, int pos, int newKey);
-
+    void MovingUp (HEAP *a, int pos);
 
 };
 

@@ -171,10 +171,6 @@ not sure above parts
 }//end Xue slides
 */
 
-int	dijkstra(int n, pNODE *A, int s, int t, int f_i, int f_d, int f_u, int f_p)
-{
-	
-}
 
 /*
 G = graph
@@ -234,5 +230,16 @@ int dijkstra-SP(G, s, t)
             DecreaseKey(v,v.d)
    return 1;
    }
+}
+
+From video, Successful relaxation:
+if(V[v].d > V[u].d + w)
+{
+   V[v].d = V[u].d + w;
+   V[v].pi = u;
+
+   //go to vertex array and find position 
+   pos = V[v].pos;
+   DecreaseKey(heap, pos, V[v].d);
 }
 */

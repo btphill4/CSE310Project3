@@ -1,5 +1,5 @@
-#ifndef GRAPH_HPP
-#define GRAPH_HPP
+#ifndef Graph_HPP
+#define Graph_HPP
 #define N 10
 #define INF 1000000
 
@@ -42,7 +42,15 @@ typedef NODE *pNODE;
 //A[1], A[2], ..., A[n] form an array of n pointers of type pNode
 //A[i] is the adjacency list of vertex i
 
-int dijkstra(int n, pNODE *A, int s, int t, int f_i, int f_d, int f_u, int f_p);
+//int dijkstra(int n, pNODE *A, int s, int t, int f);
+
+//V[G] adjacency list of G = (V,E,w)
+//pNODE *source = source node source
+//int destionation = end destination
+//int flag = flag{0,1} for printing commands 
+
+//Should be the right thing just not done implementing
+int dijkstra(pVERTEX v[G], pNODE *A, int destination, int f);
 
 #endif
 /******************* End Graph.h*************************/
