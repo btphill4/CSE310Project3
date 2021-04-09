@@ -24,6 +24,8 @@ HEAP::HEAP(int n)
     ELEMENT* arr = new ELEMENT[n + 1];  //dynamically allocated
 
     H = arr;
+
+	
 }
 
 //initialize, return HEAP* ptr
@@ -305,7 +307,10 @@ void decreaseKey(HEAP* a, int i, int value)
 
 /******************* Project 3 methods*************************/
 
+void heapFree(HEAP *a)
+{
 
+}
 
 int	HEAP::xueDecreaseKey(HEAP* a, int pos, int newKey)
 {
