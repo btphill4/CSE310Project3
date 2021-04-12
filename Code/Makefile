@@ -1,9 +1,9 @@
-EXEC = run
+EXEC = djikstra
 CC = g++
 CFLAGS = -c -Wall
 # $(EXEC) has the value of shell variable EXEC, which is run.
 # run depends on the files main.o util.o heap.o
-$(EXEC) :Main.o Util.o Heap.o
+$(EXEC) :Main.o Util.o Heap.o Graph.o
 # run is created by the command g++ -o run main.o util.o
 # note that the TAB before $(CC) is REQUIRED...
 		$(CC) -o $(EXEC) Main.o Util.o Heap.o
@@ -16,6 +16,9 @@ Util.o :Util.h Util.cpp
 		$(CC) $(CFLAGS) Util.cpp
 Heap.o :Heap.h Heap.cpp
 		$(CC) $(CFLAGS) Heap.cpp
+Graph.o :Graph.h Graph.cpp
+		$(CC) $(CFLAGS) Graph.cpp
+
 
 clean :
 		rm *.o
