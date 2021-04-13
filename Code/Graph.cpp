@@ -247,7 +247,7 @@ if(V[v].d > V[u].d + w)
 */
 
 
-int	dijkstra(pVERTEX v[G], pNODE *A, int destination, int f)
+int	dijkstra(pVERTEX v[/*G*/], pNODE *A, int destination, int f)
 {
 	
 }

@@ -39,7 +39,7 @@ class HEAP
     int capacity;
     int size;
     //pELEMENT H;     //array of pointers to elements(vertices)
-    pELEMENT *H; //should be this one 
+    pELEMENT *H;      //should be this one 
      
     int heapifyCount;   //project 2 don't need
 

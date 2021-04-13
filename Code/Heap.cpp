@@ -221,7 +221,7 @@ void HEAP::insert(HEAP* a, int obj)
 	heap-size[a]++; //a->size++;
 	i = heap-size[a]; //i = a->size;
 	a[i] = (negative inifity);
-	heap-decrease-key(A,i,key(OBJ))
+	heapdecreasekey(A,i,key(OBJ))
    */
 }
 

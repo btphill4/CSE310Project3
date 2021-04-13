@@ -9,7 +9,8 @@
 #include "Graph.hpp"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h> //string class
+#include <cstring>
+#include <string>  //string class
 //#include <math.h>
 //#include <iostream>
 //#include <fstream>
@@ -19,8 +20,8 @@ using namespace std;
 ./dijkstra <graph> <direction>
 
 Text File Format:
-int n = 
-int m = 
+int n = number of vertices -> use n to initialze adjacency list A[u] of vertex u, A = (pNode *) calloc (n+1, sizeof(pNode));
+int m = number of edges 
 each line represents an edge 
 u = source vertex node
 v = destination vertex node
@@ -36,22 +37,22 @@ w(u,v) = weight of u and v
 int main(int argc, char *argv[])
 {
     //used to get direction from commandline
-    /*string direction;
+    string direction;
     for(int i = 0; i <argc; i++) {
-        printf("%d: %s\n", i, args[i]);
+        printf("%d: %s\n", i, argv[i]);
     } 
-    if(strcmp(args[2], "insertion") ==0 )
+    if(strcmp(argv[2], "insertion") ==0 )
     {
         direction = "directed";              //set sorting string to value used in left shift
     }
-    else if (strcmp(args[2], "quick") ==0 )
+    else if (strcmp(argv[2], "quick") ==0 )
     {
        direction = "undirected";               //set sorting string to value used in left shift
     }
     else
     {
         return 1;                  //else returns an error
-    }*/
+    }
 
     //start xue code
     FILE *ifile;
@@ -82,7 +83,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    //for int n
+    //Uses int n from the graph file to created the adjacency list to hold list of vertex
     A = (pNODE *) calloc(n+1, sizeof(pNODE));
     if(!A)
     {
