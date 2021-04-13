@@ -41,7 +41,7 @@ class NODE
 };
 
 //pointer class to node class
-typedef NODE *pNODE;
+typedef NODE *pNODE; 
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
 
 //A[1], A[2], ..., A[n] form an array of n pointers of type pNode
@@ -56,7 +56,7 @@ int flag = flag{0,1} for printing commands
 */
 
 //Should be the right thing just not done implementing
-int dijkstra(pVERTEX V[G], pNODE *A, int destination, int f);
+int dijkstra(pVERTEX V[/*G*/], pNODE *A, int destination, int f);
 
 #endif
 /******************* End Graph.h*************************/
