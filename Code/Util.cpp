@@ -120,3 +120,40 @@ int nextCommand(int *n, int *d, int *f)
     return c;
 }// end int nextCommand()
 
+int nextWord (char *word)
+{
+    char c;
+    int i, r_value;
+
+    //printf ("BGN nextWord\n");
+
+    r_value = 0;
+    c = getchar();
+
+    //when reading a space, tab or enter, it keeps reading for char
+    while(c == ' ' || c == '\t' || c == '\n')
+    {
+        c = getchar();
+    }
+
+    i = 0;
+    //reads the chars letter by letter until it reads the whole word
+    while(c != EOF)
+    {   //breaks the loop if there is a space, enter, tab
+        if (c == ' ' || c == '\t' || c == '\n')
+        {
+            break;
+        }
+    r_value = 1;
+    word[i] = c;
+    i++;
+    c = getchar();
+    }
+    word[i] = '\0';
+
+    //printf("END nextWord\n");
+    //r_value is 1 for success
+    //r_value is 0 for fail
+
+    return r_value;
+}

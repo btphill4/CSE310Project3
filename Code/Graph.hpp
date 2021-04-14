@@ -15,11 +15,12 @@ class VERTEX
     int pos; //index in the heap array MAKE SURE TO UPDATE IN HEAP OPERATIONS
 
     float key; //holds the distance from the source vertex
+
     //may not need
     int vertex; //not sure what this is for
     char *name; //name of the POI represented by this vertex
 
-    //GRAPH methods
+    //GRAPH methods HE HAS NO METHODS IN HERE
     VERTEX();
     
     void addEdge(int u, int v, int w);
@@ -43,6 +44,7 @@ typedef VERTEX *pVERTEX;
 //This the adjacency list of vertex u, and will be called A[u] 
 class NODE
 {
+    public:
     int u; //start vertex u reduandant safe guard not needed
 
     int v; //end vertex v
@@ -70,9 +72,9 @@ int flag = flag{0,1} for printing commands
 */
 
 //Should be the right thing just not done implementing
-int dijkstra(pVERTEX V[/*G*/], pNODE *A, int destination, int f);
+int dijkstra(int n, pNODE *A,int source, int destination, int f);
 
-
+void printPath(int n, int source, int destination, int s, int t);
 /***************************************************************************/
 class GRAPH
 {

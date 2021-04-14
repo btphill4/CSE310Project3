@@ -11,5 +11,6 @@
 
 int nextCommand(int *n,int *f);
 
+int nextWord(char *word);
 
 #endif

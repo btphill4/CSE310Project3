@@ -4,8 +4,8 @@
  * files together and takes command input from the user
  * 
  */
-#include "Util.h"
-#include "Heap.h"
+#include "Util.hpp"
+#include "Heap.hpp"
 #include "Graph.hpp"
 #include <stdlib.h>
 #include <stdio.h>
@@ -36,36 +36,119 @@ w(u,v) = weight of u and v
 
 int main(int argc, char *argv[])
 {
-    //used to get direction from commandline
-    string direction;
-    for(int i = 0; i <argc; i++) {
-        printf("%d: %s\n", i, argv[i]);
-    } 
-    if(strcmp(argv[2], "insertion") ==0 )
-    {
-        direction = "directed";              //set sorting string to value used in left shift
-    }
-    else if (strcmp(argv[2], "quick") ==0 )
-    {
-       direction = "undirected";               //set sorting string to value used in left shift
-    }
-    else
-    {
-        return 1;                  //else returns an error
-    }
-
     //start xue code
     FILE *ifile;
 
     pNODE *A;
     pNODE node;
-    pVERTEX *V;
+    //pVERTEX *V;
+    VERTEX *V;
 
     char word[256];
     char word2[256];
     int n, m, directed_graph, i;
     int s, s_new, t, t_new, source, source_new, destination, destination_new;
     int u, v, edge_id, flag, flag_new;
+    float w;
+
+    int v_scanf, v_fscanf;
+    int r_value;
+
+
+    /* used to get direction from commandline */
+    //if there are not 3 arguments in the call, error
+    if(argc != 3)
+    {
+        printf("Command Format: %s <graph_file> <direction>\n", argv[0]);
+    exit(1);
+    }
+
+    //if <direction> == directed 
+    //set directed_graph == 1 else will be 0
+    if(0 == strcmp(argv[2], "directed\0"))
+    {
+        directed_graph = 1;
+    }
+
+    /* ifile Reading */
+    //opens network file to be read 
+    ifile = fopen(argv[1], "r");
+    //if no ifile
+    if(!ifile)
+    {
+        printf("ErrorGLX1: cannot open file for reading.\n");
+    }
+
+    //read om n = |V| and m = |E|
+    v_fscanf = fscanf(ifile, "%d%d", &n, &m);
+
+    if(v_fscanf < 2)
+    {
+        printf("ErrorGLX2: fscan returns %d.\n", v_fscanf);
+    }
+
+    /* allocate memory for adjacency lists */
+    //Uses int n from the graph file to 
+    //created the adjacency list to hold list of vertex
+     A = (pNODE *) calloc(n+1, sizeof(pNODE));
+    if(!A)
+    {
+        printf("Error: calloc failure.\n");
+        exit(1);
+    }
+
+    /* read in edges and construct adjacency lists */
+    for(i = 1; i <=m; i++)
+    {
+        v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
+        if(v_fscanf < 4);
+        {
+            printf("Error: fscanf returns %d.\n", v_fscanf);
+            exit(1);
+        }
+    
+
+        node = (pNODE) malloc(sizeof(NODE));
+        if(!node)
+        {
+            printf("Error: malloc failure.\n");
+            exit(1);
+        }
+
+        node->u = u;
+        node->v = v;
+        node->w = w;
+        node->next = A[u];
+        A[u] = node;
+
+        //for undirected graphs
+        if(!directed_graph)
+        {
+            //BGN: undirected 
+            node = (pNODE) malloc(sizeof(NODE));
+            if(!node)
+            {
+                printf("Error: malloc failure.\n");
+                exit(1);
+            }
+            node->u = v;
+            node->v = u;
+            node->w = w;
+            node->next = A[v];
+            A[v] = node;
+        }//end if Undirected Graphs
+
+    }//end for loop
+
+    /*
+    //BGN for adjacency lists
+    for(i = 1; i<=n; i++)
+    {
+        printf("Node %d:"")
+    }
+    //MISSING LOTS OF CODE HERE BUT ITS COMMENTED OUT
+    */
+    
 
     /* more code between these */
 
@@ -74,24 +157,107 @@ int main(int argc, char *argv[])
 
     source = 0;
     destination = 0;
-
     //creates V[] and A[]
-    V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
+    V = (VERTEX *) calloc(n+1, sizeof(VERTEX));
     if(!V)
     {
         printf("Error: calloc failure.\n");
         exit(1);
     }
 
-    //Uses int n from the graph file to created the adjacency list to hold list of vertex
-    A = (pNODE *) calloc(n+1, sizeof(pNODE));
-    if(!A)
-    {
-        printf("Error: calloc failure.\n");
-        exit(1);
-    }
 
-    //Query Loop
+    /*~~~~~~~~~~~~~~Query Loop~~~~~~~~~~~~~*/
+    while(1)
+    {
+        r_value = nextWord(word);
+        //if there is no read value
+        if(!r_value)
+        {
+            //printf("ErrorGLX: EOF\n")
+            continue;
+        }
+
+        //stop command
+        if(0 == strcmp(word, "stop"))
+        {
+            printf("Query: %s\n", word);
+            break;
+        }//end stop
+
+        //find command
+        if(0 == strcmp(word, "find"))
+        {
+            v_scanf = scanf("%d%d%d", &source_new, &destination_new, &flag_new);
+            if(v_scanf !=3)
+            {
+                //printf("ErrorGLX3: wrong return value for scanf\n");
+                continue;
+            }
+            else
+            {
+                printf("Query: %s %d %d %d\n", 
+                    word, source_new, destination_new, flag_new);
+                if(source_new < 1 || source_new > n || flag_new < 0 || flag_new > 1)
+                {
+                    printf("Error: invalid find query\n");
+                }
+                else
+                {
+                    source = source_new;
+                    destination = destination_new;
+                    flag = flag_new;
+                    dijkstra(n, A, source, destination, flag);
+                }
+            }
+
+        }//end find
+
+        //write command
+        else if(0 == strcmp(word, "write"))
+        {
+            r_value = nextWord(word2);
+            if(!r_value)
+            {
+                //printf("ErrorGLX4: EOF\n");
+                continue; 
+            }
+            if(0 == strcmp(word2, "path"))
+            {
+                v_fscanf = scanf("%d%d", &s_new, &t_new);
+                if (v_scanf !=2)
+                {
+                    //printf("ErrorcwGLX5: wrong return value for scanf\n");
+                    continue;
+                }
+                else
+                {
+                    printf("Query: %s %s %d %d\n", word, word2, s_new, t_new);
+
+                    if(source == 0)
+                    {
+                        printf("Error: no path computation done\n");
+                    }
+                    else if(s_new != source || t_new == s_new || t_new < 1 || t_new > n)
+                    {
+                        printf("Error: invalid source destination pair\n");
+                    }
+                    else
+                    {
+                        s = s_new; t = t_new;
+                        printPath(n, source, destination, s, t);
+                    }
+
+                }
+            }
+        }//end of write
+        else
+        {
+            //printf("ErrorGLX: Bad Input\n");
+            continue;
+        }
+    }//end of query loop
+    
+
 
 }
 
