@@ -31,7 +31,7 @@ w(u,v) = weight of u and v
 2nd line: u v w(u,v)
 
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
- */
+*/
 
 
 int main(int argc, char *argv[])

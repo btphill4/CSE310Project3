@@ -247,7 +247,16 @@ if(V[v].d > V[u].d + w)
 */
 
 
-int	dijkstra(pVERTEX v[/*G*/], pNODE *A, int destination, int f)
+int	dijkstra(pVERTEX V[/*G*/], pNODE *A, int destination, int f)
 {
-	
+	//for each v (inside of) V[G] set v values to defaults
+   for(int i = 0; i <= sizeof(V); i++ )
+   {
+      V[i]->color = 0;
+      V[i]->pi = NULL;
+      V[i]->dist = INF;
+   }
+
+   //set source node to default source values
+   
 }
