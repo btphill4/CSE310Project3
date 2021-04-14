@@ -3,7 +3,7 @@
 #define N 10
 #define INF 1000000
 
-//this is the adjacency list
+//Holds the vertex values == GRAPH?
 class VERTEX
 {
     public:
@@ -14,9 +14,17 @@ class VERTEX
     float dist; //name current distance from source vertex
     int pos; //index in the heap array MAKE SURE TO UPDATE IN HEAP OPERATIONS
 
+    float key; //holds the distance from the source vertex
     //may not need
     int vertex; //not sure what this is for
     char *name; //name of the POI represented by this vertex
+
+    //GRAPH methods
+    VERTEX();
+    
+    void addEdge(int u, int v, int w);
+
+    void shortestPath(int s);   //shortest path from s
     
 };
 //allocate memory with V = (VERTEX * ) calloc(n+1, sizeof(VERTEX));
@@ -28,6 +36,9 @@ typedef VERTEX *pVERTEX;
 //v[i].pi is either 0 or the predecessor of vertex i
 //v[i].dist is the current value of the source to i distance
 //v[i].name is not used at this moment
+
+
+/**********************************************************************/
 
 //This the adjacency list of vertex u, and will be called A[u] 
 class NODE
@@ -47,6 +58,9 @@ typedef NODE *pNODE;
 //A[1], A[2], ..., A[n] form an array of n pointers of type pNode
 //A[i] is the adjacency list of vertex i
 
+/***********************************************************************/
+
+
 /**Dijkstra's Algorithm 
 int dijkstra-SP(G, s, t){}
 V[G] adjacency list of G = (V,E,w)
@@ -57,6 +71,24 @@ int flag = flag{0,1} for printing commands
 
 //Should be the right thing just not done implementing
 int dijkstra(pVERTEX V[/*G*/], pNODE *A, int destination, int f);
+
+
+/***************************************************************************/
+class GRAPH
+{
+    public: 
+    int V; //number of vertices
+
+    GRAPH(int V);
+
+    //adds edge to the graph
+    void addEdge(int u, int v, int w);
+
+    //shortest path from s
+    void shortestPath(int s);
+};
+
+
 
 #endif
 /******************* End Graph.h*************************/
