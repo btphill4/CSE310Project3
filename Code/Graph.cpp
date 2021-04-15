@@ -246,17 +246,38 @@ if(V[v].d > V[u].d + w)
 }
 */
 
+//initialize values and pointers
+pNODE *A;
+pNODE node;
+//pVERTEX *V;
+VERTEX *V;
+
+//allocate memory for adjacency lists MAY NOT NEED IN GRAPH.cpp
+//A = (pNODE *) calloc(n+1, sizeof(pNODE));
+    if(!A)
+    {
+        printf("Error: calloc failure.\n");
+        exit(1);
+    }
 
 int dijkstra(int n, pNODE *A,int source, int destination, int f);
 {
 	//for each v (inside of) V[G] set v values to defaults
-   for(int i = 0; i <= sizeof(V); i++ )
+   for(int i = 0; i <= sizeof(V); i++)
    {
       V[i]->color = 0;
       V[i]->pi = NULL;
       V[i]->dist = INF;
    }
 
+
    //set source node to default source values
-   A
+   
+
+   node = A[u];
+
+
 }
+
+
+void printPath(int n, int source, int destination, int s, int t);

@@ -75,22 +75,9 @@ int flag = flag{0,1} for printing commands
 int dijkstra(int n, pNODE *A,int source, int destination, int f);
 
 void printPath(int n, int source, int destination, int s, int t);
-/***************************************************************************/
-class GRAPH
-{
-    public: 
-    int V; //number of vertices
 
-    GRAPH(int V);
-
-    //adds edge to the graph
-    void addEdge(int u, int v, int w);
-
-    //shortest path from s
-    void shortestPath(int s);
-};
-
-
+//may not need this one
+void addEdge(int u, int v, int w);
 
 #endif
 /******************* End Graph.h*************************/

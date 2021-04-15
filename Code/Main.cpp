@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
     /* allocate memory for adjacency lists */
     //Uses int n from the graph file to 
     //created the adjacency list to hold list of vertex
-     A = (pNODE *) calloc(n+1, sizeof(pNODE));
+    A = (pNODE *) calloc(n+1, sizeof(pNODE));
     if(!A)
     {
         printf("Error: calloc failure.\n");
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 
     source = 0;
     destination = 0;
-    //creates V[] and A[]
+    //creates V[]
     V = (VERTEX *) calloc(n+1, sizeof(VERTEX));
     if(!V)
     {
