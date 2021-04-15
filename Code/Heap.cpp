@@ -307,6 +307,7 @@ void decreaseKey(HEAP* a, int i, int value)
 
 /******************* Project 3 methods*************************/
 
+
 void heapFree(HEAP *a)
 {
 

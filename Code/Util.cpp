@@ -144,10 +144,10 @@ int nextWord (char *word)
         {
             break;
         }
-    r_value = 1;
-    word[i] = c;
-    i++;
-    c = getchar();
+        r_value = 1;
+        word[i] = c;
+        i++;
+        c = getchar();
     }
     word[i] = '\0';
 
