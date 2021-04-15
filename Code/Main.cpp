@@ -73,13 +73,19 @@ int main(int argc, char *argv[])
     /* ifile Reading */
     //opens network file to be read 
     ifile = fopen(argv[1], "r");
-    //if no ifile
-    if(!ifile)
+    //if no ifilefor(i = 1; i <=m; i++)
     {
+        v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
+        if(v_fscanf < 4);
+        {
+            printf("Error: fscanf returns %d.\n", v_fscanf);
+            exit(1);
+        }
+    
         printf("ErrorGLX1: cannot open file for reading.\n");
     }
 
-    //read om n = |V| and m = |E|
+    //read m n = |V| and m = |E|
     v_fscanf = fscanf(ifile, "%d%d", &n, &m);
 
     if(v_fscanf < 2)
