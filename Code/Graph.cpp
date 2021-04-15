@@ -7,6 +7,7 @@
  */
 
 #include "Graph.hpp"
+#include "Heap.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -253,15 +254,24 @@ pNODE node;
 VERTEX *V;
 
 //allocate memory for adjacency lists MAY NOT NEED IN GRAPH.cpp
-//A = (pNODE *) calloc(n+1, sizeof(pNODE));
-    if(!A)
-    {
-        printf("Error: calloc failure.\n");
-        exit(1);
-    }
 
-int dijkstra(int n, pNODE *A,int source, int destination, int f);
+
+int dijkstra(int n, pNODE *A,int source, int destination, int f)
 {
+   A = (pNODE *) calloc(n+1, sizeof(pNODE));
+   if(!A)
+   {
+      printf("Error: calloc failure.\n");
+      exit(1);
+   }
+
+   V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
+   if(!V)
+   {
+      printf("Error: calloc failure.\n");
+      exit(1);
+   }
+
 	//for each v (inside of) V[G] set v values to defaults
    for(int i = 0; i <= sizeof(V); i++)
    {
@@ -272,9 +282,76 @@ int dijkstra(int n, pNODE *A,int source, int destination, int f);
 
 
    //set source node to default source values
+   V[source]->color = 0;
+
+
+   HEAP* heap = new HEAP(n);
    
 
    node = A[u];
+
+   while(node) 
+      {
+         v = node->v;
+         w = node->w;
+
+         /* relaxtion method */
+
+         //if the v(edge) is unsearched,  
+         if(V[v].color == 0)
+         {
+            //set "IN PROCESS" values
+            V[v].dist = V[u].dist + w; //update the weight from source and next node
+            V[v].pi = u;      //set predecessor to u
+            V[v].color = 1;   //set edge to grey
+
+            //Testing
+            //printf("V[d].color to 1\n" , v);
+            
+            //sets V[v].pos to the size of heap + 1
+            V[v].pos = heap->size+1;
+
+            //create element pointer 
+            //element = (ELEMENT *) malloc(sizeof(ELEMENT));
+            pVERTEX element = (pVERTEX ) malloc(sizeof(pVERTEX));
+
+            //set element pointer vertex to the current v's vertex
+            element->vertex = v;
+
+            //set elememt pointer key to the V[v].dist edge
+            element->key = V[v].dist;
+
+            //insert pointer element into the heap
+            HEAP::insert(heap, element);  
+
+            //FLAG for printing
+            if(f == 1)
+            {
+               //print insertion information
+               printf("Inserted V[%d], dist=%12.4f\n", v, V[v].dist);
+            }
+         }
+
+         /* WEIGHT CHECK */
+         //if the weight is heigher
+         else if(V[v].dist > V[u].dist + w)
+         {
+            //prints insertion information
+            if(f == 1)
+            {
+               //print insertion information
+               printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v].dist, V[u].dist+w);
+            }
+            V[v].dist = V[u].dist + w;
+            V[v].pi = u;
+            pos = V[v].pos;
+
+            DecreaseKey(heap, pos, V[v].dist);
+         }
+
+         //else move to next node
+         node = node -> next;
+      }
 
 
 }
