@@ -29,7 +29,7 @@ class VERTEX
     
 };
 //allocate memory with V = (VERTEX * ) calloc(n+1, sizeof(VERTEX));
-typedef VERTEX *pVERTEX;
+typedef VERTEX *pVERTEX; 
 
 //v[1], v[2], ... v[n] represent an array of n structs of type pVERTEX
 //v[i] rpresents vertex i
@@ -75,6 +75,7 @@ int flag = flag{0,1} for printing commands
 int dijkstra(int n, pNODE *A,int source, int destination, int f);
 
 void printPath(int n, int source, int destination, int s, int t);
+void writePath();
 
 //may not need this one
 void addEdge(int u, int v, int w);

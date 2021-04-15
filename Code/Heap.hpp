@@ -94,7 +94,8 @@ class HEAP
     //Methods For project 2
     //required methods
     
-    void insert(HEAP* a, int key);
+    void insert(HEAP* a, VERTEX element);
+    //void insert(HEAP* a, int key);
     void extractMin(HEAP* a);
     void decreaseKey(HEAP* a, int index, int key);
     void minHeapify(HEAP* a, int index);
@@ -108,7 +109,7 @@ class HEAP
 
     //project 3 methods
     void heapFree(HEAP *a);
-    int xueDecreaseKey(HEAP *a, int pos, int newKey);
+    void xueDecreaseKey(HEAP *a, int pos, int newKey);
     void MovingUp (HEAP *a, int pos);
 
 };

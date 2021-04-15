@@ -43,67 +43,6 @@ using namespace std;
              if the destination is extracted from the heap, your algorthims should not perform any relaxations
         
 */
-//find method
-//find <source> <destination> <flag>
-
-//insert method WRONG
-/*
-void	Graph::Dijkstra(int n, int w[][N], Edge* f, int len[], int source)
-{
-   //intializing values
-	int i, x, vnear, min;
-   Edge::Edge e;
-   x = 0;
-
-   int visted[n], length[n];
-   length[0] = -1;
-   for(i = 0; i < n; i++)
-   {
-      //check if i != source-1
-      if(i != source-1)
-      {
-         //if i!= the source, it sets the visted[i] to source -1 
-         visted[i] = source -1;
-         length[i] = w[source-1][i];
-      }
-
-   }
-
-   //while x < n 
-   while(x < n)
-   {
-      min = INF; 
-      for(i = 0; i < n; i++)
-      {
-         if(length[i] >= 0 && length[i] < min)
-         {
-            min = length[i];
-            vnear = i;
-         }
-      }
-
-      //add the edge's source to the visited[vnear]
-      e.source = visited[vnear];
-      e.end = vnear;
-      
-      //set the edge weight to min
-      e.weight = min;
-
-      //perform check to find the lengths
-      if(e.source == (source - 1))
-      {
-         len[e.end] = 1;
-      }
-      else
-      {
-         len[e.end] = len[e.source] + 1
-      }
-      F[y++] = e; //adds the edge to the array of finished edges (Edge F)
-
-   }
-
-
-}*/
 /*
 Xue's code
 
@@ -248,33 +187,46 @@ if(V[v].d > V[u].d + w)
 */
 
 //initialize values and pointers
-pNODE *A;
+//pNODE *A; 
 pNODE node;
 //pVERTEX *V;
-VERTEX *V;
+pVERTEX* V;
+//pVERTEX* v;
+int pos;
+int u, v;
+float w;
 
 //allocate memory for adjacency lists MAY NOT NEED IN GRAPH.cpp
 
-
-int dijkstra(int n, pNODE *A,int source, int destination, int f)
+/*
+int n is number of vertices from txt file
+pNODE* A is the adjacency list holding all of the NODES which holds node(s) that point 
+         to other nodes(u,v) and u->color or 
+*/
+int dijkstra(int n, pNODE* A, int source, int destination, int f)
 {
-   A = (pNODE *) calloc(n+1, sizeof(pNODE));
+   /*A = (pNODE *) calloc(n+1, sizeof(pNODE));
    if(!A)
    {
       printf("Error: calloc failure.\n");
       exit(1);
-   }
-
-   V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
+   }*/
+   
+   
+   /*V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
    if(!V)
    {
       printf("Error: calloc failure.\n");
       exit(1);
-   }
+   }*/
+
+   node = A[u];
+
 
 	//for each v (inside of) V[G] set v values to defaults
    for(int i = 0; i <= sizeof(V); i++)
    {
+      //I think this should be right. V == list of edges; v == next node
       V[i]->color = 0;
       V[i]->pi = NULL;
       V[i]->dist = INF;
@@ -282,13 +234,15 @@ int dijkstra(int n, pNODE *A,int source, int destination, int f)
 
 
    //set source node to default source values
-   V[source]->color = 0;
+   V[source]->color = 0;   //
+   V[source]->pi = NULL;
+   V[source]->dist = 0;    //distance to itself
 
 
    HEAP* heap = new HEAP(n);
    
-
-   node = A[u];
+   
+   
 
    while(node) 
       {
@@ -298,18 +252,18 @@ int dijkstra(int n, pNODE *A,int source, int destination, int f)
          /* relaxtion method */
 
          //if the v(edge) is unsearched,  
-         if(V[v].color == 0)
+         if(V[v]->color = 0)
          {
             //set "IN PROCESS" values
-            V[v].dist = V[u].dist + w; //update the weight from source and next node
-            V[v].pi = u;      //set predecessor to u
-            V[v].color = 1;   //set edge to grey
+            V[v]->dist = V[u]->dist + w; //update the weight from source and next node
+            V[v]->pi = u;      //set predecessor to u
+            V[v]->color = 1;   //set edge to grey
 
             //Testing
             //printf("V[d].color to 1\n" , v);
             
             //sets V[v].pos to the size of heap + 1
-            V[v].pos = heap->size+1;
+            V[v]->pos = heap->size+1;
 
             //create element pointer 
             //element = (ELEMENT *) malloc(sizeof(ELEMENT));
@@ -319,7 +273,7 @@ int dijkstra(int n, pNODE *A,int source, int destination, int f)
             element->vertex = v;
 
             //set elememt pointer key to the V[v].dist edge
-            element->key = V[v].dist;
+            element->key = V[v]->dist;
 
             //insert pointer element into the heap
             HEAP::insert(heap, element);  
@@ -334,7 +288,7 @@ int dijkstra(int n, pNODE *A,int source, int destination, int f)
 
          /* WEIGHT CHECK */
          //if the weight is heigher
-         else if(V[v].dist > V[u].dist + w)
+         else if(V[v]->dist > V[u]->dist + w)
          {
             //prints insertion information
             if(f == 1)
@@ -342,19 +296,44 @@ int dijkstra(int n, pNODE *A,int source, int destination, int f)
                //print insertion information
                printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v].dist, V[u].dist+w);
             }
-            V[v].dist = V[u].dist + w;
-            V[v].pi = u;
-            pos = V[v].pos;
+            V[v]->dist = V[u]->dist + w;
+            V[v]->pi = u;
+            pos = V[v]->pos;
 
-            DecreaseKey(heap, pos, V[v].dist);
+            HEAP::xueDecreaseKey(heap, pos, V[v]->dist);
          }
 
          //else move to next node
          node = node -> next;
       }
 
+   //PRINTING METHOD (INT FLAG == 1)
+   /*
+   if(f ==1)
+   {
+      for(v=1; v <= n; v++)
+      {
+         if(V[v].color == 0)
+         {
+            printf("V[%7d].dist=    inifinity, ", v);
+         }
+         else
+         {
+            printf("V[%7d].dist= %12.4f, ", v, V[v].dist);
+         }
+         printf("V[%7d].pi=%d, ", v, V[v].pi);
+         printf("V[%7d].pos=%d\n", v, V[v].pos);
+      }*/
+}
+
+/** 
+For "Write Path" in main
+Write path scans for &s_new(new source node) and &t_new(new destination node)  
+*/
+void printPath(int n, int source, int destination, int s, int t)
+{
 
 }
 
 
-void printPath(int n, int source, int destination, int s, int t);
+

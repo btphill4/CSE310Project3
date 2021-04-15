@@ -189,7 +189,7 @@ ELEMENT HEAP::getHeapMin(HEAP * a)
 
 //inserts an object of type ELEMENT pointed to by 
 //element into the heap pointed to by heap
-void HEAP::insert(HEAP* a, int obj)
+void HEAP::insert(HEAP* a, VERTEX element)
 {
 
     //This will be in main
@@ -313,19 +313,21 @@ void heapFree(HEAP *a)
 
 }
 
-int	HEAP::xueDecreaseKey(HEAP* a, int pos, int newKey)
+void	HEAP::xueDecreaseKey(HEAP* a, int pos, int newKey)
 {
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
 	if(pos<1 || pos > a->size || newKey >= a->H[pos]->key)
 	{
 		printf("Error in DecreaseKey\n");
-		return 1;
+		//return 1;
+		
 	}
-
+	else{
 	//else key = newKey
 	a->H[pos]->key = newKey;
 	MovingUp(a, pos);
-	return 0;
+	//return 0;
+	}
 }
 
 void HEAP::MovingUp (HEAP* a, int pos)
