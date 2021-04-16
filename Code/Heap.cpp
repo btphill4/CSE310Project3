@@ -12,6 +12,10 @@
 #include <math.h>
 using namespace std;
 
+//Need for project 3
+pVERTEX V;
+
+
 
 //constructor
 HEAP::HEAP(int n)
@@ -21,7 +25,7 @@ HEAP::HEAP(int n)
     //size = 12;	//wrong I think
 
     //element pointer array
-    ELEMENT* arr = new ELEMENT[n + 1];  //dynamically allocated
+    pELEMENT arr = new VERTEX[n + 1];  //dynamically allocated
 
     H = arr;
 
@@ -140,8 +144,9 @@ void HEAP::minHeapify(HEAP * a, int i)
 	int right = gRight(i);
 	int root = i;
 
-	
-	ELEMENT *keyPtr = new ELEMENT();
+	/************************************************************************/
+	ELEMENT *keyPtr = new ELEMENT(); //this may be wrong
+	/***********************************************************************/
 	keyPtr->key = a->H->key;
 	//Logic should be right but the pointer issue
 	if(left >= a->getSize() && a->H[left].key <= a->H[i].key)
@@ -186,44 +191,6 @@ ELEMENT HEAP::getHeapMin(HEAP * a)
 	return a->H[1];
 }
 
-
-//inserts an object of type ELEMENT pointed to by 
-//element into the heap pointed to by heap
-void HEAP::insert(HEAP* a, VERTEX element)
-{
-
-    //This will be in main
-    if (a->size== capacity) 
-	{ 
-		cout << "\nOverflow: Could not insertKey\n"; 
-		return; 
-	} 
-	
-	// First insert the new key at the end 
-	a->size++; 
-	int i = a->size - 1; 
-	//a->H[i].key = obj; 
-	ELEMENT *keyPtr = new ELEMENT();
-	keyPtr->key = obj;
-	a->H[i] = *keyPtr;
-
-	// Fix the min heap property if it is violated 
-	while (i != 0 && a->H[gParent(i)].key > a->H[i].key) 
-	{ 
-	swap(a->H[i].key, a->H[gParent(i)].key); 
-	i = gParent(i); 
-	} 
-    
-
-   //added element, size++ ADD TO MAIN MAYBE
-   /*
-	Xue Slides
-	heap-size[a]++; //a->size++;
-	i = heap-size[a]; //i = a->size;
-	a[i] = (negative inifity);
-	heapdecreasekey(A,i,key(OBJ))
-   */
-}
 
 //deletes the minimum element from the 
 //heap pointed to by heapand prints them
@@ -307,48 +274,110 @@ void decreaseKey(HEAP* a, int i, int value)
 
 /******************* Project 3 methods*************************/
 
-
-void heapFree(HEAP *a)
+//inserts an object of type ELEMENT pointed to by 
+//element into the heap pointed to by heap
+void HEAP::insert(HEAP* a, int obj)
 {
+
+    //This will be in main
+    if (a->size== capacity) 
+	{ 
+		cout << "\nOverflow: Could not insertKey\n"; 
+		return; 
+	} 
+	
+	// First insert the new key at the end 
+	a->size++; 
+	int i = a->size - 1; 
+	a->H[i].key = obj; 
+	/***********************************************************/
+	ELEMENT *keyPtr = new ELEMENT();	//This also could be wrong and should be pElement(MAYBE)
+	/***********************************************************/
+	keyPtr->key = obj;
+	a->H[i] = *keyPtr;
+
+	// Fix the min heap property if it is violated 
+	while (i != 0 && a->H[gParent(i)].key > a->H[i].key) 
+	{ 
+	swap(a->H[i].key, a->H[gParent(i)].key); 
+	i = gParent(i); 
+	} 
+
+	
+    
+
+   //added element, size++ ADD TO MAIN MAYBE
+   /*NOT really sure what this is tbh
+	Xue Slides
+	heap-size[a]++; //a->size++;
+	i = heap-size[a]; //i = a->size;
+	a[i] = (negative inifity);
+	heapdecreasekey(A,i,key(OBJ))
+   */
+}
+
+void heapFree(HEAP *a) //still probably wrong
+{
+	free(a);	//Possibly should be it idk if not for loop sets values to null
+
+	for(int i = 0; i < sizeof(a->H);i++)
+	{
+		a->H[i].key = NULL;
+	}
+	a->size = 0;
 
 }
 
+//decrease the key value using position
 void	HEAP::xueDecreaseKey(HEAP* a, int pos, int newKey)
 {
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
-	if(pos<1 || pos > a->size || newKey >= a->H[pos]->key)
+	if(pos<1 || pos > a->size || newKey >= a->H[pos].key)
 	{
 		printf("Error in DecreaseKey\n");
 		//return 1;
 		
 	}
-	else{
 	//else key = newKey
-	a->H[pos]->key = newKey;
+	else
+	{
+	a->H[pos].key = newKey;
 	MovingUp(a, pos);
-	//return 0;
+	//return 0;	//this might need to return an int probably like a bool maybe?
 	}
+
 }
 
+//Moving up moves the element to its new position and sets it parents values
 void HEAP::MovingUp (HEAP* a, int pos)
 {
 	//declare variables
 	int parent;
-	pELEMENT temp; 
+	ELEMENT temp; //might need to change 
 
 	parent = pos/2; 
 
-
-	if(pos>1 && a->H[pos]->key < a->H[parent]->key)
-	{
+	/*
+	Check if int pos > 1 {1,2,3...} else out of bounds
+	and that the new elements new position has a higher key value(moving UP)
+	and sets the position and new key value accordingly
+	*/
+	if(pos>1 && a->H[pos].key < a->H[parent].key)
+	{	
+		//temporary variable to hold current position integer
 		temp = a->H[pos];
+
+		//sets the current position to the parents positon(moves the element)
 		a->H[pos] = a->H[parent];
+
+		//sets the parent position to the temp value of the old position for current node
 		a->H[parent] = temp;
 
 		//go to vertex array and update the pos there too
-		V[a->H[pos]->vertex].pos = pos;
-		V[a->H[parent]->vertex].pos = parent;
+		V[a->H[pos].vertex].pos = pos;	//current vertex position is updated in vertex array
+		V[a->H[parent].vertex].pos = parent; //the parents position gets updated in the vertex array
 
+		//call to method if successful
 		MovingUp(a,parent); 
 	}
 

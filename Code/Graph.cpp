@@ -241,9 +241,7 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
 
    HEAP* heap = new HEAP(n);
    
-   
-   
-
+   //Relaxtion method and updating graph done here
    while(node) 
       {
          v = node->v;
@@ -276,13 +274,14 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
             element->key = V[v]->dist;
 
             //insert pointer element into the heap
-            HEAP::insert(heap, element);  
+            
+            heap->insert(heap, element->key);  //probably Wrong
 
-            //FLAG for printing
+            //FLAG for printing MIGHT NOT BE HERE
             if(f == 1)
             {
                //print insertion information
-               printf("Inserted V[%d], dist=%12.4f\n", v, V[v].dist);
+               printf("Inserted V[%d], dist=%12.4f\n", v, V[v]->dist);
             }
          }
 
@@ -294,36 +293,45 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
             if(f == 1)
             {
                //print insertion information
-               printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v].dist, V[u].dist+w);
+               printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
+               printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
             }
-            V[v]->dist = V[u]->dist + w;
+
+            //sets the next nodes values to the current 
+            V[v]->dist = V[u]->dist + w; //I think w should be called from V[u]->w or something
             V[v]->pi = u;
+
+            //position maintence
             pos = V[v]->pos;
 
-            HEAP::xueDecreaseKey(heap, pos, V[v]->dist);
+            heap->xueDecreaseKey(heap, pos, V[v]->dist);
+            
          }
 
          //else move to next node
          node = node -> next;
+
+         //==========I think we need to extractMin() somewhere=====================
       }
 
-   //PRINTING METHOD (INT FLAG == 1)
-   /*
+   //PRINTING METHOD (INT FLAG == 1) 
+   
    if(f ==1)
    {
       for(v=1; v <= n; v++)
       {
-         if(V[v].color == 0)
+         if(V[v]->color == 0)
          {
             printf("V[%7d].dist=    inifinity, ", v);
          }
          else
          {
-            printf("V[%7d].dist= %12.4f, ", v, V[v].dist);
+            printf("V[%7d].dist= %12.4f, ", v, V[v]->dist);
          }
-         printf("V[%7d].pi=%d, ", v, V[v].pi);
-         printf("V[%7d].pos=%d\n", v, V[v].pos);
-      }*/
+         printf("V[%7d].pi=%d, ", v, V[v]->pi);
+         printf("V[%7d].pos=%d\n", v, V[v]->pos);
+      }
+   }
 }
 
 /** 
@@ -332,8 +340,59 @@ Write path scans for &s_new(new source node) and &t_new(new destination node)
 */
 void printPath(int n, int source, int destination, int s, int t)
 {
+   /*
+      Shortest path from s to d can be extracted using the predecessor
+      The output has two lines:
+      Shortest path: <s, s2, s3, ..., sk, d>
+      The path weight is: weight(s, s2, s3, ..., sk, d)
+         where predecessor(s2) = s, (s3) = 2 and 
+         weight(s, s2, s3, ... sk, d) - D: a floating point value for whole path 
+      
+   */
+
+   //read in the source and destination
+
+   /*backtrace the predecossor V[destination]->pi and V[destination]->weight 
+   and then go to V[pi]->pi and V[pi]->weight etc and store values to list, then reverse the list
+   */
+
+   //Errors 
+   /*
+   if shortest(s,d) unknown 
+   first line: Path not known to be shortest: <s, s2, s3, ..., sk, d>
+   second line: path weight is: weight(s, s2, s3, ..., sk, d)
+   */
+
+   /*
+   No shortest(s-d) path computed but valid values
+   "No s-d path has been computed, yet."
+   Hint: use %d for printing an integer here
+   */
+
+   /*
+   No shortest(s-d) exsists in Graph G
+   "No s-d path exists."
+   */
 
 }
 
+//use to compute the weight between two nodes MAY NOT NEED
+float get_weight(pNODE* A, int u, int v)
+{
+   float w;
+   //set the node(node being manipulated) to the adjaceny lists first node(u)
+   node = A[u];
+
+   if(node)
+   {
+      w = V[u]->dist + V[v]->dist;
+      return w;
+   }
+   else
+   {
+      cout << "Error in get_Weight\n";
+   }
+
+}
 
 

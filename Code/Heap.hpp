@@ -16,15 +16,15 @@ typedef VERTEX *pELEMENT;
 
 /** Element class that holds keys of type integer*/
 //MAY NEED TO CHANGE TO STRUCTS CAUSE XUE CODE 
-class ELEMENT
+/*class ELEMENT
 {
     public:
     //int key;
     float key;
     int vertex; //points to the vertex V[vertex]
-};
+};*/
 
-//typedef ELEMENT *pELEMENT;
+typedef ELEMENT *eELEMENT;
 
 
 //pointer to element class to be used with an array
@@ -38,8 +38,8 @@ class HEAP
     public: 
     int capacity;
     int size;
-    //pELEMENT H;     //array of pointers to elements(vertices)
-    pELEMENT *H;      //should be this one 
+    //pELEMENT *H;     //array of pointers to elements(vertices) <type> VERTEX
+    pELEMENT H;      //With <type> ELEMENT
      
     int heapifyCount;   //project 2 don't need
 
@@ -67,7 +67,7 @@ class HEAP
         //return this->size;
         return this->size;
     }
-   /* pELEMENT getH()
+    pELEMENT getH()
     {
         return this->H;
     } 
@@ -76,7 +76,7 @@ class HEAP
     void setH(pELEMENT sH)
     {
         H = sH;
-    }*/
+    }
 
     void setCapacity(int c)
     {
@@ -94,7 +94,7 @@ class HEAP
     //Methods For project 2
     //required methods
     
-    void insert(HEAP* a, VERTEX element);
+    void insert(HEAP* a, int obj); //might need to be pElement but DON't NEED
     //void insert(HEAP* a, int key);
     void extractMin(HEAP* a);
     void decreaseKey(HEAP* a, int index, int key);
@@ -114,5 +114,90 @@ class HEAP
 
 };
 
+
+/*
+//heap class OLD WITH typedef ELEMENT* pELEMENT
+class HEAP
+{
+    //values to be set at construction
+    public: 
+    int capacity;
+    int size;
+    //pELEMENT *H;     //array of pointers to elements(vertices) <type> VERTEX
+    eELEMENT H;      //With <type> ELEMENT
+     
+    int heapifyCount;   //project 2 don't need
+
+    //~~~constructors~~~~//
+    //default
+    HEAP()
+    {
+        
+    }
+    //for initalize(n)
+    HEAP(int n);
+
+
+    //methods for project 1
+    HEAP* initialize(int n);
+    void heapPrint(HEAP* a);
+
+    //getter methods
+    int getCapacity()
+    {
+	    return this->capacity;
+    }
+    int getSize()
+    {
+        //return this->size;
+        return this->size;
+    }
+    eELEMENT getH()
+    {
+        return this->H;
+    } 
+    
+    //setters methods
+    void setH(eELEMENT sH)
+    {
+        H = sH;
+    }
+
+    void setCapacity(int c)
+    {
+        capacity = c;
+    }
+
+    void setSize(int s)
+    {
+        size = s;
+    }
+
+//====================================================//
+
+
+    //Methods For project 2
+    //required methods
+    
+    void insert(HEAP* a, ELEMENT obj);
+    //void insert(HEAP* a, int key);
+    void extractMin(HEAP* a);
+    void decreaseKey(HEAP* a, int index, int key);
+    void minHeapify(HEAP* a, int index);
+
+    //Not required may not need
+    void buildMinHeap(HEAP* a);
+    void heapSort(HEAP* a);
+    ELEMENT getHeapMin(HEAP* a);
+
+//====================================================//
+
+    //project 3 methods
+    void heapFree(HEAP *a);
+    void xueDecreaseKey(HEAP *a, int pos, int newKey);
+    void MovingUp (HEAP *a, int pos);
+
+};
+*/
 
 #endif

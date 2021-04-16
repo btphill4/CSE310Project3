@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
             continue;
         }
 
-        //stop command
+        //stop command (FREE MEMORY HERE)
         if(0 == strcmp(word, "stop"))
         {
             printf("Query: %s\n", word);
@@ -245,8 +245,8 @@ int main(int argc, char *argv[])
                 {
                     printf("Query: %s %s %d %d\n", word, word2, s_new, t_new);
 
-                    //if source == 0 (doesn't exist {1,2,3...})
-                    if(source == 0)
+                    //if source == 0 (doesn't exist {1,2,3...}) or A isn't initalized
+                    if(source == 0 || !A)
                     {
                         printf("Error: no path computation done\n");
                     }
