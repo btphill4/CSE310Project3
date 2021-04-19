@@ -4,12 +4,10 @@
  * to parse input to the main
 */
 
-#ifndef Util_hpp
-#define Util_hpp
+#ifndef Util_h
+#define Util_h
 #include <stdlib.h>
  
-
-int nextCommand(int *n,int *f);
 
 int nextWord(char *word);
 

@@ -6,8 +6,8 @@
  * FOR REPORT PAGE 589
  */
 
-#include "Graph.hpp"
-#include "Heap.hpp"
+#include "Graph.h"
+#include "Heap.h"
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -193,7 +193,7 @@ if(V[v].d > V[u].d + w)
 //pNODE *A; 
 
 //pVERTEX *V;
-extern pVERTEX* V;
+//extern pVERTEX* V;
 //pVERTEX* v;
 int pos;
 int u, v;
@@ -204,22 +204,19 @@ int n is number of vertices from txt file
 pNODE* A is the adjacency list holding all of the NODES which holds node(s) that point 
          to other nodes(u,v) and u->color or 
 */
-int dijkstra(int n, pNODE* A, int source, int destination, int f)
+int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
 {
    //initalize variables and stuctures
    pNODE node;
-   HEAP *heap;
+   HEAP *heap = new HEAP();
    pVERTEX element;
 
    int u, v, i;
    float w;
    int pos;
 
-   node = A[u];
-
-
 	//for each v (inside of) V[G] set v values to defaults
-   for(int i = 0; i <= sizeof(V); i++)
+   for(i = 0; i <= sizeof(V); i++)
    {
       //I think this should be right. V == list of edges; v == next node
       V[i]->color = 0;
@@ -229,19 +226,19 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
 
 
    //set source node to default source values
-   V[source]->color = 0;   //
+   V[source]->color = 0;   //white color
    //V[source]->pi = 0;
    V[source]->dist = 0;    //distance to itself
 
    //heap and element data structures
-   HEAP* heap = heap->initialize(n);
+   heap = heap->initialize(n);
 
    //create element pointer 
    //element = (ELEMENT *) malloc(sizeof(ELEMENT));
-   element = (pVERTEX ) malloc(sizeof(pVERTEX));   //should possibly be (pVertex *)
+   element = (VERTEX *) malloc(sizeof(VERTEX));   //should possibly be (pVertex *)
    element->vertex = source;
    element->key = 0;
-   //heap->insert(heap, element);
+   heap->insert(heap, element);
 
    //if flag == 1 print insert
    if(f ==1)
@@ -265,15 +262,17 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
 
    while(heap->size)
    {
-      element = heap->extractMin(heap, f);
+      element = heap->deleteMin(heap, V, f);
+
       //print delete information
       if(f == 1)
       {
          printf("Delete vertex %d, key=%12.4f\n", element->vertex, element->key); 
       }
 
+      //sets u as the current element pointer vertex
       u = element->vertex;
-      V[u]->color = 2;
+      V[u]->color = 2;  //searched
 
       //the destination is found
       if(element->vertex == destination)
@@ -281,8 +280,10 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
          break;
       }
       free(element);
+
       node = A[u];
 
+      //else set values to the next node
       while(node)
       {
          v = node->v;
@@ -299,7 +300,7 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
             //printf("V[%d].color to 1\n", v);
 
             V[v]->pos = heap->size + 1;
-            element = (pVERTEX ) malloc(sizeof(pVERTEX));
+            element = (VERTEX *) malloc(sizeof(VERTEX));
             element->vertex = v;
             element->key = V[v]->dist;
 
@@ -337,6 +338,28 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
 
          //else move to next node
          node = node -> next;
+      }//end while(node)
+
+      return 1; //need to return something
+   }//end while(heap->size)
+
+   return 1;
+
+   //I THINK WE STILL NEED PRINTING INFORMATION
+    if(f ==1)
+   {
+      for(v=1; v <= n; v++)
+      {
+         if(V[v]->color == 0)
+         {
+            printf("V[%7d].dist=    inifinity, ", v);
+         }
+         else
+         {
+            printf("V[%7d].dist= %12.4f, ", v, V[v]->dist);
+         }
+         printf("V[%7d].pi=%d, ", v, V[v]->pi);
+         printf("V[%7d].pos=%d\n", v, V[v]->pos);
       }
    }
 }
@@ -345,7 +368,7 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
 For "Write Path" in main
 Write path scans for &s_new(new source node) and &t_new(new destination node)  
 */
-void printPath(int n, int source, int destination, int s, int t)
+void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
 {
    /*
       Shortest path from s to d can be extracted using the predecessor
@@ -392,10 +415,14 @@ void printPath(int n, int source, int destination, int s, int t)
    pPath = pNODE;
    v = pNODE->vertex;
 
+   //while a predessor exists
    while(V[v]->pi)
-   {
+   {  
+      //u == predessor
       u = V[v]->pi;
       pNODE = (PATH *) malloc(sizeof(PATH));
+
+      //save path
       pNODE->vertex = u;
       pNODE->next = pPath;
       v = pNODE->vertex;
@@ -441,10 +468,10 @@ void printPath(int n, int source, int destination, int s, int t)
    "No s-d path exists."
    */
 
-}
+}//end printPath
 
 //use to compute the weight between two nodes MAY NOT NEED
-float get_weight(pNODE* A, int u, int v)
+float get_weight(pNODE* A, pVERTEX* V, int u, int v)
 {
    pNODE node;
    float w;

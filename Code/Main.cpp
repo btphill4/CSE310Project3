@@ -4,9 +4,9 @@
  * files together and takes command input from the user
  * 
  */
-#include "Util.hpp"
-#include "Heap.hpp"
-#include "Graph.hpp"
+#include "Util.h"
+#include "Heap.h"
+#include "Graph.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstring>
@@ -33,20 +33,22 @@ w(u,v) = weight of u and v
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
 */
 
-pVERTEX *V;
+
 
 int main(int argc, char *argv[])
 {
-    //start xue code
+    //initalizing values
     FILE *ifile;
 
+    //structures
     pNODE *A;
     pNODE node;
-    //pVERTEX *V;
-    
-
+    pVERTEX *V;
+        
+    //for nextWord
     char word[256];
     char word2[256];
+
     //for reading text, vertices, edges
     int n, m, directed_graph, i;
     //for source nodes and destination nodes
@@ -55,7 +57,7 @@ int main(int argc, char *argv[])
     int u, v, edge_id, flag, flag_new;
     float w;
 
-    //for util.h
+    //for util
     int v_scanf, v_fscanf;
     int r_value;
 
@@ -78,10 +80,10 @@ int main(int argc, char *argv[])
     /* ifile Reading */
     //opens network file to be read 
     ifile = fopen(argv[1], "r");
-    //if no ifilefor(i = 1; i <=m; i++)
+    //error printing ifilefor(i = 1; i <=m; i++)
     {
         v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
-        if(v_fscanf < 4);
+        if(v_fscanf < 4)
         {
             printf("Error: fscanf returns %d.\n", v_fscanf);
             exit(1);
@@ -115,7 +117,7 @@ int main(int argc, char *argv[])
         //scan the file for 
         //int edge_id(name),int u(start index), int v(destination/end vertex), float weight
         v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
-        if(v_fscanf < 4);
+        if(v_fscanf < 4)
         {
             printf("Error: fscanf returns %d.\n", v_fscanf);
             exit(1);
@@ -180,7 +182,7 @@ int main(int argc, char *argv[])
     //set default values for VERTEX variables
     source = 0;
     destination = 0;
-    //creates V[] MIGHT NEED TO CHANGE TO pVERTEX
+    //creates V[]
     V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
     if(!V)
     {
@@ -246,7 +248,7 @@ int main(int argc, char *argv[])
                     flag = flag_new;
 
                     //dijkstras call
-                    dijkstra(n, A, source, destination, flag);
+                    dijkstra(n, A, V, source, destination, flag);
                 }
             }
 
@@ -264,7 +266,7 @@ int main(int argc, char *argv[])
             if(0 == strcmp(word2, "path"))
             {
                 v_fscanf = scanf("%d%d", &s_new, &t_new);
-                if (v_scanf !=2)
+                if(v_scanf !=2)
                 {
                     //printf("ErrorcwGLX5: wrong return value for scanf\n");
                     continue;
@@ -294,7 +296,7 @@ int main(int argc, char *argv[])
                     else
                     {
                         s = s_new; t = t_new;
-                        printPath(n, source, destination, s, t);
+                        printPath(n, source, V, destination, s, t);
                     }
 
                 }

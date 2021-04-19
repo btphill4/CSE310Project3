@@ -1,5 +1,5 @@
-#ifndef Graph_HPP
-#define Graph_HPP
+#ifndef Graph_H
+#define Graph_H
 #define N 10
 #define INF 1000000
 
@@ -28,7 +28,7 @@ class VERTEX
     void shortestPath(int s);   //shortest path from s
     
 };
-//allocate memory with V = (VERTEX * ) calloc(n+1, sizeof(VERTEX));
+//allocate memory with V = (VERTEX *) calloc(n+1, sizeof(VERTEX));
 typedef VERTEX *pVERTEX; 
 
 //v[1], v[2], ... v[n] represent an array of n structs of type pVERTEX
@@ -80,13 +80,13 @@ int flag = flag{0,1} for printing commands
 */
 
 //Should be the right thing just not done implementing
-int dijkstra(int n, pNODE *A, int source, int destination, int f);
+int dijkstra(int n, pNODE *A, pVERTEX* V, int source, int destination, int f);
 
-void printPath(int n, int source, int destination, int s, int t);
+void printPath(int n, int source, pVERTEX* V, int destination, int s, int t);
 //void writePath();
 
 //may not need this one
-void addEdge(int u, int v, int w);
+void addEdge(int u, pVERTEX* V, int v, int w);
 
 #endif
 /******************* End Graph.h*************************/

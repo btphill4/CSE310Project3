@@ -5,10 +5,10 @@
 */
 
 
-#ifndef Heap_hpp
-#define Heap_hpp
+#ifndef Heap_h
+#define Heap_h
 #include <stdio.h>
-#include "Graph.hpp"
+#include "Graph.h"
 
 //Of type VERTEX so it hold VERTEX elements
 typedef VERTEX ELEMENT;
@@ -39,7 +39,7 @@ class HEAP
     int capacity;
     int size;
     //pELEMENT *H;     //array of pointers to elements(vertices) <type> VERTEX
-    pELEMENT H;      //With <type> ELEMENT
+    pELEMENT* H;      //With <type> ELEMENT
      
     int heapifyCount;   //project 2 don't need
 
@@ -67,13 +67,13 @@ class HEAP
         //return this->size;
         return this->size;
     }
-    pELEMENT getH()
+    pELEMENT* getH()
     {
         return this->H;
     } 
     
     //setters methods
-    void setH(pELEMENT sH)
+    void setH(pELEMENT* sH)
     {
         H = sH;
     }
@@ -94,24 +94,25 @@ class HEAP
     //Methods For project 2
     //required methods
     //void insert(HEAP* a, int key);
-    pVERTEX extractMin(HEAP* a, int f);
+    
     void decreaseKey(HEAP* a, int index, int key);
     void minHeapify(HEAP* a, int index);
     //void HEAP::extractMin(HEAP* a, int f);
     //Not required may not need
     void buildMinHeap(HEAP* a);
     void heapSort(HEAP* a);
-    ELEMENT getHeapMin(HEAP* a);
+    pELEMENT getHeapMin(HEAP* a);
 
 //====================================================//
 
     //project 3 methods
     void heapFree(HEAP *a);
     int xueDecreaseKey(HEAP *a, int pos, int newKey);
-    void MovingUp (HEAP *a, int pos);
-    void MovingDown(HEAP *a, int pos, int flag);
+    void MovingUp (HEAP *a, pVERTEX* V,int pos);
+    void MovingDown(HEAP *a, pVERTEX* V, int pos, int flag);
     int insert(HEAP* a, pELEMENT obj); 
-    pELEMENT deleteMin(HEAP* heap, int flag);
+    pELEMENT deleteMin(HEAP* heap, pVERTEX* V, int flag);
+    void extractMin(HEAP* a, pVERTEX* V, int f);
 };
 #endif
 /*

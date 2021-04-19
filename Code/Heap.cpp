@@ -5,7 +5,7 @@
 */
 
 
-#include "Heap.hpp"
+#include "Heap.h"
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -13,7 +13,7 @@
 using namespace std;
 
 //Need for project 3
-pVERTEX V;
+pVERTEX* V;
 
 
 
@@ -25,7 +25,7 @@ HEAP::HEAP(int n)
     //size = 12;	//wrong I think
 
     //element pointer array
-    pELEMENT arr = new ELEMENT[n + 1];  //dynamically allocated
+    pELEMENT* arr = new pVERTEX[n + 1];  //dynamically allocated
 
     H = arr;
 
@@ -43,16 +43,16 @@ HEAP*	HEAP::initialize(int n)
 
     return heap;
 }
-
+/*
 //print the objects of the heap
 void HEAP::heapPrint(HEAP* a)
 {
 	//print the capity and size
     cout << "capacity=" << a->capacity << ", size=" 
     << a->size << endl;
-
+	*/
     //print the HEAP from size 1
-    pELEMENT arr = a->getH();
+   /* pVERTEX arr = a->getH();
     for(int i = 1; i <= a->size; i++)
     {
         //if key is == 0, break the for loop
@@ -73,8 +73,8 @@ void HEAP::heapPrint(HEAP* a)
         cout << arr[i].key << ", ";
         }
     }
-    //cout << endl;
-}
+    //cout << endl; */
+//} //end heapPrint()
 //==================END Project 1=========================//
 
 //=================Project 2 Methods=================//
@@ -112,8 +112,9 @@ int gRight(int i)
 }
 
 //builds a minHeap
+/*
 void HEAP::buildMinHeap(HEAP* a)//buildHeap(pointer to array heap?)
-{
+{ */
 	//a->getSize() == a->getCapacity();
 	/*for(int i = (a->getCapacity()); i <= 1; i++)
 	{
@@ -121,7 +122,7 @@ void HEAP::buildMinHeap(HEAP* a)//buildHeap(pointer to array heap?)
 		counter++;
 		a->heapifyCount++;
 	} */
-
+	/*
 	for(int i = a->size/2; i >= 1; i--)
 	{
 		//accessing elements
@@ -130,10 +131,11 @@ void HEAP::buildMinHeap(HEAP* a)//buildHeap(pointer to array heap?)
 
 		a->minHeapify(a, i);	//this is the call to minheapify recursively
 		a->heapifyCount++;
-	}
+	} 
 	
-}
-//builds minHeap 
+}*/ //end buildMinHeap()
+//builds minHeap
+ /* 
 void HEAP::minHeapify(HEAP * a, int i)
 {
 	//pELEMENT arr = a->getH();
@@ -143,13 +145,16 @@ void HEAP::minHeapify(HEAP * a, int i)
 	int left = gLeft(i);
 	int right = gRight(i);
 	int root = i;
-
+	*/
 	/************************************************************************/
-	ELEMENT *keyPtr = new ELEMENT(); //this may be wrong
+	//ELEMENT *keyPtr = new ELEMENT(); //this may be wrong
+	//VERTEX *keyPtr = new VERTEX();
+	//pVERTEX keyptr = (pNODE *) calloc(n+1, sizeof(pNODE));
 	/***********************************************************************/
-	keyPtr->key = a->H->key;
+	/*
+	keyPtr->key = a->H[i]->key;	//THIS MAY BE WRONG
 	//Logic should be right but the pointer issue
-	if(left >= a->getSize() && a->H[left].key <= a->H[i].key)
+	if(left >= a->getSize() && a->H[left]->key <= a->H[i]->key)
 	{
 		a->H[root] = a->H[left];
 		//root = left;
@@ -160,19 +165,20 @@ void HEAP::minHeapify(HEAP * a, int i)
 		//root = i;
 	}
 
-	if(right <= a->getSize() && a->H[right].key <= a->H[i].key)
+	if(right <= a->getSize() && a->H[right]->key <= a->H[i]->key)
 	{
 		a->H[root] = a->H[right];
 		//root = right;
 	}
 	if(root != i)
 	{
-		swap(a->H[root].key, a->H[i].key);
+		swap(a->H[root]->key, a->H[i]->key);
 		minHeapify(a, root);
 	}
 	
-}
+}*/ //END minHeapify()
 
+/*
 //sorts the heap(min) (I think uneeded but ye)
 void HEAP::heapSort(HEAP* a)
 {
@@ -183,10 +189,10 @@ void HEAP::heapSort(HEAP* a)
 		a->size--;
 
 	}
-}
-
+} //end of heapSort
+*/
 //returns the root element(doesn't remove element)
-ELEMENT HEAP::getHeapMin(HEAP * a)
+pELEMENT HEAP::getHeapMin(HEAP * a)
 {
 	return a->H[1];
 }
@@ -194,25 +200,31 @@ ELEMENT HEAP::getHeapMin(HEAP * a)
 
 //deletes the minimum element from the 
 //heap pointed to by heapand prints them
-pVERTEX HEAP::extractMin(HEAP* a, int f)
+/*
+void HEAP::extractMin(HEAP* a, pVERTEX* V, int f)	//SHOULDN'T BE VOID
 {	
 	//will be in main
 	if(a->getSize() < 1)
 	{
 		cout << "heap is empty\n";
 	}
+	*/
 
 	//print deleted key
-	/*ELEMENT *keyPtr = new ELEMENT();
-	keyPtr->key = a->H[1]->key;*/
+	//ELEMENT *keyPtr = new ELEMENT();
+	//keyPtr->key = a->H[1]->key;
 	//a->H[1]->key = *key;
-	cout << "Deleted key: " << a->H[1].key << endl;
+	/*
+	cout << "Deleted key: " << a->H[1]->key << endl;
 
 	int min;
-	min = a->H[0].key;
+	min = a->H[0]->key;
 	a->H[0] = a->H[a->size];
 	a->size = a->size - 1;
 	minHeapify(a,0);
+
+	//return a->H; 
+	*/
 
     /* 
     if (heap_size <= 0) 
@@ -234,25 +246,25 @@ pVERTEX HEAP::extractMin(HEAP* a, int f)
 
    //removes the element, size--
   // a->size--;
-}
-
+//} end extractMin
+/*
 //right method but pointers are rough
 //decreases the key of heap->H[index] to value
 void decreaseKey(HEAP* a, int i, int value)
 { 	//main call: mainHeap->decreaseKey(mainHeap, n, f);
 	
 	
-	if (value > a->H[i-1].key)
+	if (value > a->H[i-1]->key)
 	{
 		cout << "key is larger than current key";
 	}
-	a->H[i].key = value;
-	while (i > 1 && a->H[gParent(i)].key > a->H[i].key)
+	a->H[i]->key = value;
+	while (i > 1 && a->H[gParent(i)]->key > a->H[i]->key)
 	{
-		swap(a->H[i].key, a->H[gParent(i)].key);
+		swap(a->H[i]->key, a->H[gParent(i)]->key);
 		i = gParent(i);
 	}
-	
+	*/
 	/*
 	Xue Slides
 	if key < a[i]
@@ -267,7 +279,7 @@ void decreaseKey(HEAP* a, int i, int value)
 			i = getParent(i);
 		}
 	 */
-}
+//} end decreaseKey()
 
 /******************* End Project 2 *************************/
 
@@ -284,41 +296,13 @@ int HEAP::insert(HEAP* heap, pELEMENT obj)
 		return 1;
 	}
 	heap->size++;
-	heap->H[heap->size] = obj;
-	heap->H[heap->size].pos = heap->size;
+	heap->H[heap->size] = obj; 
+	heap->H[heap->size]->pos = heap->size;
 	//another version
-	///V[heap->H[heap->size]->vertex].pos = heap->size;
+	//V[heap->H[heap->size].vertex].pos = heap->size;
 
-	MovingUp(heap, heap->size);
+	MovingUp(heap, V, heap->size);
 	return 0;
-
-	/*
-    //This will be in main
-    if(a->size== capacity) 
-	{ 
-		cout << "\nOverflow: Could not insertKey\n"; 
-		return; 
-	} 
-	
-	// First insert the new key at the end 
-	a->size++; 
-	int i = a->size - 1; 
-	a->H[i].key = obj->key; */
-	/***********************************************************/
-	//ELEMENT *keyPtr = new ELEMENT();	//This also could be wrong and should be pElement(MAYBE)
-	/***********************************************************/
-	/*keyPtr->key = obj;
-	a->H[i] = *keyPtr;
-
-	// Fix the min heap property if it is violated 
-	while (i != 0 && a->H[gParent(i)].key > a->H[i].key) 
-	{ 
-	swap(a->H[i].key, a->H[gParent(i)].key); 
-	i = gParent(i); 
-	} */
-
-	
-    
 
    //added element, size++ ADD TO MAIN MAYBE
    /*NOT really sure what this is tbh
@@ -330,15 +314,11 @@ int HEAP::insert(HEAP* heap, pELEMENT obj)
    */
 }
 
-void heapFree(HEAP *a) //still probably wrong
+void heapFree(HEAP *heap) //still probably wrong
 {
-	free(a);	//Possibly should be it idk if not for loop sets values to null
-
-	for(int i = 0; i < sizeof(a->H);i++)
-	{
-		a->H[i].key = NULL;
-	}
-	a->size = 0;
+	free(heap);	//Possibly should be it idk if not for loop sets values to null
+	free(heap->H);
+	
 
 }
 
@@ -346,7 +326,7 @@ void heapFree(HEAP *a) //still probably wrong
 int	HEAP::xueDecreaseKey(HEAP* heap, int pos, int newKey)
 {
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
-	if(pos<1 || pos > heap->size || newKey >= heap->H[pos].key)
+	if(pos<1 || pos > heap->size || newKey >= heap->H[pos]->key)
 	{
 		printf("Error: invalid call to DecreaseKey\n");
 		return 1;
@@ -355,19 +335,19 @@ int	HEAP::xueDecreaseKey(HEAP* heap, int pos, int newKey)
 	//else key = newKey
 	else
 	{
-	heap->H[pos].key = newKey;
-	MovingUp(heap, pos);
+	heap->H[pos]->key = newKey;
+	MovingUp(heap, V, pos);
 	return 0;	//this might need to return an int probably like a bool maybe?
 	}
 
 }
 
 //Moving up moves the element to its new position and sets it parents values
-void HEAP::MovingUp (HEAP* heap, int pos)
+void HEAP::MovingUp (HEAP *heap, pVERTEX* V, int pos)
 {
 	//declare variables
 	int parent;
-	VERTEX temp; //might need to change 
+	pELEMENT temp; //might need to change 
 
 	parent = pos/2; 
 
@@ -376,7 +356,7 @@ void HEAP::MovingUp (HEAP* heap, int pos)
 	and that the new elements new position has a higher key value(moving UP)
 	and sets the position and new key value accordingly
 	*/
-	if(pos>1 && heap->H[pos].key < heap->H[parent].key)
+	if(pos>1 && heap->H[pos]->key < heap->H[parent]->key)
 	{	
 		//temporary variable to hold current position integer
 		temp = heap->H[pos];
@@ -387,38 +367,45 @@ void HEAP::MovingUp (HEAP* heap, int pos)
 		//sets the parent position to the temp value of the old position for current node
 		heap->H[parent] = temp;
 
+		//================================Might need to change these=============
 		//go to vertex array and update the pos there too
-		V[heap->H[pos].vertex].pos = pos;	//current vertex position is updated in vertex array
-		V[heap->H[parent].vertex].pos = parent; //the parents position gets updated in the vertex array
+		V[heap->H[pos]->vertex]->pos = pos;	//current vertex position is updated in vertex array
+		V[heap->H[parent]->vertex]->pos = parent; //the parents position gets updated in the vertex array
+		//heap->H[pos]->vertex->pos = pos;
+		//heap->H[parent]->vertex->pos = parent; 
+		//=====================================================
 
 		//call to method if successful
-		MovingUp(heap, parent); 
+		MovingUp(heap, V, parent); 
 	}
 
 }
 
-pELEMENT HEAP::deleteMin(HEAP* heap, int flag)
+void HEAP::MovingDown(HEAP *heap, pVERTEX* V, int pos, int flag)
 {
-	pELEMENT min, last;	//might be pVERTEX or ELEMENT
+	//like minHeapify swapping the parents until the order is restored
+
+}
+
+pELEMENT HEAP::deleteMin(HEAP* heap, pVERTEX* V, int flag)
+{
+	pELEMENT min, last;	//might be pVERTEX or pELEMENT
 
 	if(heap->size <= 0)
 	{
 		printf("Error in DeleteMin: heap empty\n");
 		return NULL;
 	}
-
+	else
+	{
 	min = heap->H[1];
-	last = heap->H[heap->size--];
+	last = heap->H[heap->size--]; 
 	heap->H[1] = last;
-	V[heap->H[1].vertex].pos = 1;
-	MovingDown(heap, 1, flag);
-	V[min.vertex].pos = 0;
+	V[heap->H[1]->vertex]->pos = 1;
+	MovingDown(heap, V, 1, flag);
+	V[min->vertex]->pos = 0;
 
 	return min;
+	}
 }
 
-void HEAP::MovingDown(HEAP *heap, int pos, int flag)
-{
-	//like minHeapify swapping the parents until the order is restored
-
-}
