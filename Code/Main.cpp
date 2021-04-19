@@ -33,6 +33,7 @@ w(u,v) = weight of u and v
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
 */
 
+pVERTEX *V;
 
 int main(int argc, char *argv[])
 {
@@ -42,15 +43,19 @@ int main(int argc, char *argv[])
     pNODE *A;
     pNODE node;
     //pVERTEX *V;
-    VERTEX *V;
+    
 
     char word[256];
     char word2[256];
+    //for reading text, vertices, edges
     int n, m, directed_graph, i;
+    //for source nodes and destination nodes
     int s, s_new, t, t_new, source, source_new, destination, destination_new;
+    //for reading source node and next nodes and flags
     int u, v, edge_id, flag, flag_new;
     float w;
 
+    //for util.h
     int v_scanf, v_fscanf;
     int r_value;
 
@@ -60,7 +65,7 @@ int main(int argc, char *argv[])
     if(argc != 3)
     {
         printf("Command Format: %s <graph_file> <direction>\n", argv[0]);
-    exit(1);
+        exit(1);
     }
 
     //if <direction> == directed 
@@ -116,7 +121,7 @@ int main(int argc, char *argv[])
             exit(1);
         }
     
-
+        //creates a pointerNode using size of NODE
         node = (pNODE) malloc(sizeof(NODE));
         if(!node)
         {
@@ -130,6 +135,7 @@ int main(int argc, char *argv[])
         node->w = w;
         node->next = A[u];
 
+        //adjacency list does not need to be freed 
         //adds the [m] node to the 
         A[u] = node;
 
@@ -156,36 +162,55 @@ int main(int argc, char *argv[])
     //BGN for adjacency lists
     for(i = 1; i<=n; i++)
     {
-        printf("Node %d:"")
+        printf("Node %d:", i);
+        node = A[i];
+        while(node)
+        {
+            printf("-->|%d %4.1f| ", node->v, node->w);
+            node = node->next;
+        }
+        printf("\n");
     }
-    //MISSING LOTS OF CODE HERE BUT ITS COMMENTED OUT
+    //Checking adjacency list, Bug checking
     */
-    
-
-    /* more code between these */
 
     //close the input file;
     fclose(ifile);
 
+    //set default values for VERTEX variables
     source = 0;
     destination = 0;
-    //creates V[]
-    V = (VERTEX *) calloc(n+1, sizeof(VERTEX));
+    //creates V[] MIGHT NEED TO CHANGE TO pVERTEX
+    V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
     if(!V)
     {
         printf("Error: calloc failure.\n");
         exit(1);
     }
 
+    //creates vertex objects to be pointed at and adding the values to each vertex
+    for(i = 1; i <= n; i++)
+    {
+        V[i] = (VERTEX *) malloc(sizeof(VERTEX));
+        if(!V[i])
+        {
+            printf("Error: malloc failure.\n");
+            exit(1);
+        }
+        V[i]->vertex = i;
+    }
+
 
     /*~~~~~~~~~~~~~~Query Loop~~~~~~~~~~~~~*/
     while(1)
-    {
+    {   
+        //first read in command 
         r_value = nextWord(word);
+
         //if there is no read value
-        if(!r_value)
+        if(!r_value) 
         {
-            //printf("ErrorGLX: EOF\n")
+            printf("ErrorGLX: EOF\n");
             continue;
         }
 
@@ -198,11 +223,12 @@ int main(int argc, char *argv[])
 
         //find command
         if(0 == strcmp(word, "find"))
-        {
+        {   
+            //read in 3 values
             v_scanf = scanf("%d%d%d", &source_new, &destination_new, &flag_new);
             if(v_scanf !=3)
             {
-                //printf("ErrorGLX3: wrong return value for scanf\n");
+                printf("ErrorGLX3: wrong return value for scanf\n");
                 continue;
             }
             else
@@ -218,6 +244,8 @@ int main(int argc, char *argv[])
                     source = source_new;
                     destination = destination_new;
                     flag = flag_new;
+
+                    //dijkstras call
                     dijkstra(n, A, source, destination, flag);
                 }
             }

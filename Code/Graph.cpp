@@ -186,17 +186,18 @@ if(V[v].d > V[u].d + w)
 }
 */
 
+
+
+//allocate memory for adjacency lists MAY NOT NEED IN GRAPH.cpp
 //initialize values and pointers
 //pNODE *A; 
-pNODE node;
+
 //pVERTEX *V;
-pVERTEX* V;
+extern pVERTEX* V;
 //pVERTEX* v;
 int pos;
 int u, v;
 float w;
-
-//allocate memory for adjacency lists MAY NOT NEED IN GRAPH.cpp
 
 /*
 int n is number of vertices from txt file
@@ -205,20 +206,14 @@ pNODE* A is the adjacency list holding all of the NODES which holds node(s) that
 */
 int dijkstra(int n, pNODE* A, int source, int destination, int f)
 {
-   /*A = (pNODE *) calloc(n+1, sizeof(pNODE));
-   if(!A)
-   {
-      printf("Error: calloc failure.\n");
-      exit(1);
-   }*/
-   
-   
-   /*V = (pVERTEX *) calloc(n+1, sizeof(pVERTEX));
-   if(!V)
-   {
-      printf("Error: calloc failure.\n");
-      exit(1);
-   }*/
+   //initalize variables and stuctures
+   pNODE node;
+   HEAP *heap;
+   pVERTEX element;
+
+   int u, v, i;
+   float w;
+   int pos;
 
    node = A[u];
 
@@ -228,54 +223,87 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
    {
       //I think this should be right. V == list of edges; v == next node
       V[i]->color = 0;
-      V[i]->pi = NULL;
-      V[i]->dist = INF;
+      V[i]->pi = 0;  //0 for nil
+      //V[i]->dist = INF;
    }
 
 
    //set source node to default source values
    V[source]->color = 0;   //
-   V[source]->pi = NULL;
+   //V[source]->pi = 0;
    V[source]->dist = 0;    //distance to itself
 
+   //heap and element data structures
+   HEAP* heap = heap->initialize(n);
 
-   HEAP* heap = new HEAP(n);
-   
-   //Relaxtion method and updating graph done here
-   while(node) 
+   //create element pointer 
+   //element = (ELEMENT *) malloc(sizeof(ELEMENT));
+   element = (pVERTEX ) malloc(sizeof(pVERTEX));   //should possibly be (pVertex *)
+   element->vertex = source;
+   element->key = 0;
+   //heap->insert(heap, element);
+
+   //if flag == 1 print insert
+   if(f ==1)
+   { 
+      printf("Insert vertex %d, key=%12.4f\n", element->vertex, element->key); 
+      /*
+      for(v=1; v <= n; v++)
+      {
+         if(V[v]->color == 0)
+         {
+            printf("V[%7d].dist=    inifinity, ", v);
+         }
+         else
+         {
+            printf("V[%7d].dist= %12.4f, ", v, V[v]->dist);
+         }
+         printf("V[%7d].pi=%d, ", v, V[v]->pi);
+         printf("V[%7d].pos=%d\n", v, V[v]->pos);
+      }*/
+   }
+
+   while(heap->size)
+   {
+      element = heap->extractMin(heap, f);
+      //print delete information
+      if(f == 1)
+      {
+         printf("Delete vertex %d, key=%12.4f\n", element->vertex, element->key); 
+      }
+
+      u = element->vertex;
+      V[u]->color = 2;
+
+      //the destination is found
+      if(element->vertex == destination)
+      {
+         break;
+      }
+      free(element);
+      node = A[u];
+
+      while(node)
       {
          v = node->v;
          w = node->w;
 
-         /* relaxtion method */
-
-         //if the v(edge) is unsearched,  
-         if(V[v]->color = 0)
+         //if next node is unsearched
+         if(V[v]->color == 0)
          {
-            //set "IN PROCESS" values
-            V[v]->dist = V[u]->dist + w; //update the weight from source and next node
-            V[v]->pi = u;      //set predecessor to u
-            V[v]->color = 1;   //set edge to grey
+            V[v]->dist = V[u]->dist + w;
+            V[v]->pi = u;
+            V[v]->color = 1;
 
-            //Testing
-            //printf("V[d].color to 1\n" , v);
-            
-            //sets V[v].pos to the size of heap + 1
-            V[v]->pos = heap->size+1;
+            //error checking
+            //printf("V[%d].color to 1\n", v);
 
-            //create element pointer 
-            //element = (ELEMENT *) malloc(sizeof(ELEMENT));
-            pVERTEX element = (pVERTEX ) malloc(sizeof(pVERTEX));
-
-            //set element pointer vertex to the current v's vertex
+            V[v]->pos = heap->size + 1;
+            element = (pVERTEX ) malloc(sizeof(pVERTEX));
             element->vertex = v;
-
-            //set elememt pointer key to the V[v].dist edge
             element->key = V[v]->dist;
 
-            //insert pointer element into the heap
-            
-            heap->insert(heap, element->key);  //probably Wrong
+            heap->insert(heap, element);  
 
             //FLAG for printing MIGHT NOT BE HERE
             if(f == 1)
@@ -283,10 +311,9 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
                //print insertion information
                printf("Inserted V[%d], dist=%12.4f\n", v, V[v]->dist);
             }
-         }
+         }//end if
 
-         /* WEIGHT CHECK */
-         //if the weight is heigher
+         //if node is already checked
          else if(V[v]->dist > V[u]->dist + w)
          {
             //prints insertion information
@@ -310,26 +337,6 @@ int dijkstra(int n, pNODE* A, int source, int destination, int f)
 
          //else move to next node
          node = node -> next;
-
-         //==========I think we need to extractMin() somewhere=====================
-      }
-
-   //PRINTING METHOD (INT FLAG == 1) 
-   
-   if(f ==1)
-   {
-      for(v=1; v <= n; v++)
-      {
-         if(V[v]->color == 0)
-         {
-            printf("V[%7d].dist=    inifinity, ", v);
-         }
-         else
-         {
-            printf("V[%7d].dist= %12.4f, ", v, V[v]->dist);
-         }
-         printf("V[%7d].pi=%d, ", v, V[v]->pi);
-         printf("V[%7d].pos=%d\n", v, V[v]->pos);
       }
    }
 }
@@ -350,7 +357,67 @@ void printPath(int n, int source, int destination, int s, int t)
       
    */
 
-   //read in the source and destination
+   //initalize variables
+   PATH *pPath;
+   PATH *pNODE;
+   int u, v;
+
+   //if the detination is unsearched
+   if(V[t]->color == 0)
+   {  //if the destination is greater than 1, greater than the number of edges, or t == destination
+      if(destination < 1 || destination > n || t == destination)
+      {
+         printf("No %d-%d path exists.\n", s,t);
+         return;
+      }
+      else
+      {
+         printf("No %d-%d path has been computed.\n", s, t);
+         return;
+      }
+   }
+   else if(V[t]->color == 1)
+   {
+      printf("Path not known to be shortest: <%d", s);
+   }
+   else if(V[t]->color == 2)
+   {
+      printf("Shortest path: <%d", s);
+   }
+
+   //using a stack to and pushing its values
+   pNODE = (PATH *) malloc(sizeof(PATH));
+   pNODE->vertex = t;
+   pNODE->next = NULL;
+   pPath = pNODE;
+   v = pNODE->vertex;
+
+   while(V[v]->pi)
+   {
+      u = V[v]->pi;
+      pNODE = (PATH *) malloc(sizeof(PATH));
+      pNODE->vertex = u;
+      pNODE->next = pPath;
+      v = pNODE->vertex;
+      
+   }
+
+   pNODE = pPath;
+   pPath = pPath->next;
+   free(pNODE);
+
+   /* More between these lines*/
+   while (pPath)
+   {
+      pNODE = pPath;
+      printf(", %d", pNODE->vertex);
+      pPath = pPath->next;
+      free(pNODE);
+   }
+   printf(">\n");
+   printf("The path weight is: %12.4f\n", V[t]->dist);
+   
+
 
    /*backtrace the predecossor V[destination]->pi and V[destination]->weight 
    and then go to V[pi]->pi and V[pi]->weight etc and store values to list, then reverse the list
@@ -379,6 +446,7 @@ void printPath(int n, int source, int destination, int s, int t)
 //use to compute the weight between two nodes MAY NOT NEED
 float get_weight(pNODE* A, int u, int v)
 {
+   pNODE node;
    float w;
    //set the node(node being manipulated) to the adjaceny lists first node(u)
    node = A[u];
@@ -390,7 +458,7 @@ float get_weight(pNODE* A, int u, int v)
    }
    else
    {
-      cout << "Error in get_Weight\n";
+      printf("Error in get_Weight\n");
    }
 
 }

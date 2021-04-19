@@ -10,7 +10,7 @@ class VERTEX
 
     //Variables
     int color; //color of vertex in {0,1,2} 0 = white, 1 = grey, 2 = black
-    int pi; //predecssor of vertex in {1,2, ..., n}
+    int pi; //predecssor of vertex in {1,2, ..., n} 0 == nil
     float dist; //name current distance from source vertex
     int pos; //index in the heap array MAKE SURE TO UPDATE IN HEAP OPERATIONS
 
@@ -62,6 +62,14 @@ typedef NODE *pNODE;
 
 /***********************************************************************/
 
+class PATH
+{
+    public: 
+    int vertex;
+    PATH *next;
+};
+
+/*********************************************************************/
 
 /**Dijkstra's Algorithm 
 int dijkstra-SP(G, s, t){}
@@ -72,10 +80,10 @@ int flag = flag{0,1} for printing commands
 */
 
 //Should be the right thing just not done implementing
-int dijkstra(int n, pNODE *A,int source, int destination, int f);
+int dijkstra(int n, pNODE *A, int source, int destination, int f);
 
 void printPath(int n, int source, int destination, int s, int t);
-void writePath();
+//void writePath();
 
 //may not need this one
 void addEdge(int u, int v, int w);

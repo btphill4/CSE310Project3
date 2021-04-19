@@ -93,13 +93,11 @@ class HEAP
 
     //Methods For project 2
     //required methods
-    
-    void insert(HEAP* a, int obj); //might need to be pElement but DON't NEED
     //void insert(HEAP* a, int key);
-    void extractMin(HEAP* a);
+    pVERTEX extractMin(HEAP* a, int f);
     void decreaseKey(HEAP* a, int index, int key);
     void minHeapify(HEAP* a, int index);
-
+    //void HEAP::extractMin(HEAP* a, int f);
     //Not required may not need
     void buildMinHeap(HEAP* a);
     void heapSort(HEAP* a);
@@ -109,12 +107,13 @@ class HEAP
 
     //project 3 methods
     void heapFree(HEAP *a);
-    void xueDecreaseKey(HEAP *a, int pos, int newKey);
+    int xueDecreaseKey(HEAP *a, int pos, int newKey);
     void MovingUp (HEAP *a, int pos);
-
+    void MovingDown(HEAP *a, int pos, int flag);
+    int insert(HEAP* a, pELEMENT obj); 
+    pELEMENT deleteMin(HEAP* heap, int flag);
 };
-
-
+#endif
 /*
 //heap class OLD WITH typedef ELEMENT* pELEMENT
 class HEAP
@@ -199,5 +198,3 @@ class HEAP
 
 };
 */
-
-#endif

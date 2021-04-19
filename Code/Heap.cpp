@@ -25,7 +25,7 @@ HEAP::HEAP(int n)
     //size = 12;	//wrong I think
 
     //element pointer array
-    pELEMENT arr = new VERTEX[n + 1];  //dynamically allocated
+    pELEMENT arr = new ELEMENT[n + 1];  //dynamically allocated
 
     H = arr;
 
@@ -194,7 +194,7 @@ ELEMENT HEAP::getHeapMin(HEAP * a)
 
 //deletes the minimum element from the 
 //heap pointed to by heapand prints them
-void HEAP::extractMin(HEAP* a)
+pVERTEX HEAP::extractMin(HEAP* a, int f)
 {	
 	//will be in main
 	if(a->getSize() < 1)
@@ -276,11 +276,25 @@ void decreaseKey(HEAP* a, int i, int value)
 
 //inserts an object of type ELEMENT pointed to by 
 //element into the heap pointed to by heap
-void HEAP::insert(HEAP* a, int obj)
+int HEAP::insert(HEAP* heap, pELEMENT obj)
 {
+	if(heap->size >= heap->capacity)
+	{
+		printf("Error in HeapInsert: Heap full...\n");
+		return 1;
+	}
+	heap->size++;
+	heap->H[heap->size] = obj;
+	heap->H[heap->size].pos = heap->size;
+	//another version
+	///V[heap->H[heap->size]->vertex].pos = heap->size;
 
+	MovingUp(heap, heap->size);
+	return 0;
+
+	/*
     //This will be in main
-    if (a->size== capacity) 
+    if(a->size== capacity) 
 	{ 
 		cout << "\nOverflow: Could not insertKey\n"; 
 		return; 
@@ -289,11 +303,11 @@ void HEAP::insert(HEAP* a, int obj)
 	// First insert the new key at the end 
 	a->size++; 
 	int i = a->size - 1; 
-	a->H[i].key = obj; 
+	a->H[i].key = obj->key; */
 	/***********************************************************/
-	ELEMENT *keyPtr = new ELEMENT();	//This also could be wrong and should be pElement(MAYBE)
+	//ELEMENT *keyPtr = new ELEMENT();	//This also could be wrong and should be pElement(MAYBE)
 	/***********************************************************/
-	keyPtr->key = obj;
+	/*keyPtr->key = obj;
 	a->H[i] = *keyPtr;
 
 	// Fix the min heap property if it is violated 
@@ -301,7 +315,7 @@ void HEAP::insert(HEAP* a, int obj)
 	{ 
 	swap(a->H[i].key, a->H[gParent(i)].key); 
 	i = gParent(i); 
-	} 
+	} */
 
 	
     
@@ -329,31 +343,31 @@ void heapFree(HEAP *a) //still probably wrong
 }
 
 //decrease the key value using position
-void	HEAP::xueDecreaseKey(HEAP* a, int pos, int newKey)
+int	HEAP::xueDecreaseKey(HEAP* heap, int pos, int newKey)
 {
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
-	if(pos<1 || pos > a->size || newKey >= a->H[pos].key)
+	if(pos<1 || pos > heap->size || newKey >= heap->H[pos].key)
 	{
-		printf("Error in DecreaseKey\n");
-		//return 1;
+		printf("Error: invalid call to DecreaseKey\n");
+		return 1;
 		
 	}
 	//else key = newKey
 	else
 	{
-	a->H[pos].key = newKey;
-	MovingUp(a, pos);
-	//return 0;	//this might need to return an int probably like a bool maybe?
+	heap->H[pos].key = newKey;
+	MovingUp(heap, pos);
+	return 0;	//this might need to return an int probably like a bool maybe?
 	}
 
 }
 
 //Moving up moves the element to its new position and sets it parents values
-void HEAP::MovingUp (HEAP* a, int pos)
+void HEAP::MovingUp (HEAP* heap, int pos)
 {
 	//declare variables
 	int parent;
-	ELEMENT temp; //might need to change 
+	VERTEX temp; //might need to change 
 
 	parent = pos/2; 
 
@@ -362,26 +376,49 @@ void HEAP::MovingUp (HEAP* a, int pos)
 	and that the new elements new position has a higher key value(moving UP)
 	and sets the position and new key value accordingly
 	*/
-	if(pos>1 && a->H[pos].key < a->H[parent].key)
+	if(pos>1 && heap->H[pos].key < heap->H[parent].key)
 	{	
 		//temporary variable to hold current position integer
-		temp = a->H[pos];
+		temp = heap->H[pos];
 
 		//sets the current position to the parents positon(moves the element)
-		a->H[pos] = a->H[parent];
+		heap->H[pos] = heap->H[parent];
 
 		//sets the parent position to the temp value of the old position for current node
-		a->H[parent] = temp;
+		heap->H[parent] = temp;
 
 		//go to vertex array and update the pos there too
-		V[a->H[pos].vertex].pos = pos;	//current vertex position is updated in vertex array
-		V[a->H[parent].vertex].pos = parent; //the parents position gets updated in the vertex array
+		V[heap->H[pos].vertex].pos = pos;	//current vertex position is updated in vertex array
+		V[heap->H[parent].vertex].pos = parent; //the parents position gets updated in the vertex array
 
 		//call to method if successful
-		MovingUp(a,parent); 
+		MovingUp(heap, parent); 
 	}
 
 }
 
+pELEMENT HEAP::deleteMin(HEAP* heap, int flag)
+{
+	pELEMENT min, last;	//might be pVERTEX or ELEMENT
 
+	if(heap->size <= 0)
+	{
+		printf("Error in DeleteMin: heap empty\n");
+		return NULL;
+	}
 
+	min = heap->H[1];
+	last = heap->H[heap->size--];
+	heap->H[1] = last;
+	V[heap->H[1].vertex].pos = 1;
+	MovingDown(heap, 1, flag);
+	V[min.vertex].pos = 0;
+
+	return min;
+}
+
+void HEAP::MovingDown(HEAP *heap, int pos, int flag)
+{
+	//like minHeapify swapping the parents until the order is restored
+
+}
