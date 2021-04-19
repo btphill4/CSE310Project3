@@ -92,9 +92,7 @@ int main(int argc, char *argv[])
         printf("ErrorGLX1: cannot open file for reading.\n");
     }
 
-    //read m n = |V| and m = |E|
-    v_fscanf = fscanf(ifile, "%d%d", &n, &m);
-
+    //read m n = |V| pVERTEX* V
     if(v_fscanf < 2)
     {
         printf("ErrorGLX2: fscan returns %d.\n", v_fscanf);

@@ -238,7 +238,7 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
    element = (VERTEX *) malloc(sizeof(VERTEX));   //should possibly be (pVertex *)
    element->vertex = source;
    element->key = 0;
-   heap->insert(heap, element);
+   heap->insert(heap, V, element);
 
    //if flag == 1 print insert
    if(f ==1)
@@ -260,8 +260,9 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
       }*/
    }
 
-   while(heap->size)
+   while(heap->size != 0)
    {
+      //pVERTEX u = heap->deleteMin(heap, V, f);
       element = heap->deleteMin(heap, V, f);
 
       //print delete information
@@ -304,7 +305,7 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
             element->vertex = v;
             element->key = V[v]->dist;
 
-            heap->insert(heap, element);  
+            heap->insert(heap, V, element);  
 
             //FLAG for printing MIGHT NOT BE HERE
             if(f == 1)
@@ -332,7 +333,7 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
             //position maintence
             pos = V[v]->pos;
 
-            heap->xueDecreaseKey(heap, pos, V[v]->dist);
+            heap->xueDecreaseKey(heap, V, pos, V[v]->dist);
             
          }
 

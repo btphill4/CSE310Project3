@@ -13,7 +13,7 @@
 using namespace std;
 
 //Need for project 3
-pVERTEX* V;
+//pVERTEX* V;
 
 
 
@@ -288,7 +288,7 @@ void decreaseKey(HEAP* a, int i, int value)
 
 //inserts an object of type ELEMENT pointed to by 
 //element into the heap pointed to by heap
-int HEAP::insert(HEAP* heap, pELEMENT obj)
+int HEAP::insert(HEAP* heap, pVERTEX* V, pELEMENT obj)
 {
 	if(heap->size >= heap->capacity)
 	{
@@ -323,7 +323,7 @@ void heapFree(HEAP *heap) //still probably wrong
 }
 
 //decrease the key value using position
-int	HEAP::xueDecreaseKey(HEAP* heap, int pos, int newKey)
+int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, int newKey)
 {
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
 	if(pos<1 || pos > heap->size || newKey >= heap->H[pos]->key)
