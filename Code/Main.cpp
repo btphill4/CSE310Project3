@@ -218,6 +218,7 @@ int main(int argc, char *argv[])
         if(0 == strcmp(word, "stop"))
         {
             printf("Query: %s\n", word);
+            //heap.heapFree();
             break;
         }//end stop
 

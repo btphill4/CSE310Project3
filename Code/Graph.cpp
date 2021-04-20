@@ -487,6 +487,7 @@ float get_weight(pNODE* A, pVERTEX* V, int u, int v)
    else
    {
       printf("Error in get_Weight\n");
+      return V[u]->dist; //I dont think this is right
    }
 
 }
