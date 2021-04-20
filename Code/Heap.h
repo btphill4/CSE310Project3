@@ -101,7 +101,7 @@ class HEAP
     //Not required may not need
     void buildMinHeap(HEAP* a);
     void heapSort(HEAP* a);
-    pELEMENT getHeapMin(HEAP* a);
+    pVERTEX getHeapMin(HEAP* a);
 
 //====================================================//
 
@@ -111,8 +111,8 @@ class HEAP
     void MovingUp (HEAP *a, pVERTEX* V,int pos);
     void MovingDown(HEAP *a, pVERTEX* V, int pos, int flag);
     int insert(HEAP* a, pVERTEX* V, pELEMENT obj); 
-    pELEMENT deleteMin(HEAP* heap, pVERTEX* V, int flag);
-    void extractMin(HEAP* a, pVERTEX* V, int f);
+    pVERTEX deleteMin(HEAP* heap, pVERTEX* V, int flag);
+    pVERTEX extractMin(HEAP* a, pVERTEX* V, int f);
 };
 #endif
 /*
