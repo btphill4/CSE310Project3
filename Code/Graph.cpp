@@ -387,6 +387,106 @@ Write path scans for &s_new(new source node) and &t_new(new destination node)
 */
 void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
 {
+   int u, v;
+   int arr[n+1];
+
+   /*
+   Shortest path from s to d can be extracted using the predecessor
+   The output has two lines:
+   Shortest path: <s, s2, s3, ..., sk, d>
+   The path weight is: weight(s, s2, s3, ..., sk, d)
+      where predecessor(s2) = s, (s3) = 2 and
+      weight(s, s2, s3, ... sk, d) - D: a floating point value for whole path
+*/
+   //initalize variables
+   PATH *pPath;
+   PATH *pNODE;
+
+   //using a stack to and pushing its values
+   pNODE = (PATH *) malloc(sizeof(PATH));
+   pNODE->vertex = t;
+   pNODE->next = NULL;
+   pPath = pNODE;
+   v = pNODE->vertex;
+   //cout << "PRINTPATH CHECK: " << pNODE->vertex << endl;
+   //cout << "source: "<< source<<endl;
+   //cout << "t: " << t<< endl;
+   //while a predessor exists
+   arr[0] = t;
+   int count = 1;
+   while(V[v]->pi)
+   {
+      //u == predessor
+      u = V[v]->pi;
+      pNODE = (PATH *) malloc(sizeof(PATH));
+
+      //save path
+      pNODE->vertex = u;
+      pNODE->next = pPath;
+
+      v = pNODE->vertex;
+      //cout << "v: " << v<< endl;
+      arr[count] = v;
+      count++;
+   }
+   // count++;
+   //arr[count] = t;
+   //cout << "t: " << t<< endl;
+   int arr2[count];
+   for(int i = count-1; i>=0; i--){
+      arr2[i] = arr[i];
+      //cout << "arr2: " << arr2[i]<< endl;
+   }
+   if(V[t]->color == 0)
+   {  //if the destination is greater than 1, greater than the number of edges, or t == destination
+      if(destination < 1 || destination > n || t == destination)
+      {
+         printf("No %d-%d path exists.\n", s,t);
+         return;
+      }
+      else
+      {
+         printf("No %d-%d path has been computed.\n", s, t);
+         return;
+      }
+   }
+   else if(V[t]->color == 1)
+   {
+      printf("Path not known to be shortest: <%d", s);
+   }
+   else if(V[t]->color == 2)
+   {
+      printf("Shortest path: <"); //printf("Shortest path: <%d", s);
+      for(int i =count-1; i>=0 ; i--){
+         printf("%d",arr2[i]);
+         if(i > 0){
+               printf(", ");
+         }
+      }
+      //for(int i =sizeof(arr); i>0;i++){
+      //   printf("Shortest path: %d", arr[i]);
+      //}
+   }
+
+
+   pNODE = pPath;
+   pPath = pPath->next;
+   free(pNODE);
+   //======================================================//
+   /* Possibly More between these lines                    */
+   //======================================================//
+   while (pPath)
+   {  
+      pNODE = pPath;
+      printf(" , %d", pNODE->vertex);
+      pPath = pPath->next;
+      free(pNODE);
+   }
+   printf(">\n");
+   printf("The path weight is: %12.4f\n", V[t]->dist);
+
+
+   //==========================================================================
    /*
       Shortest path from s to d can be extracted using the predecessor
       The output has two lines:
@@ -396,7 +496,7 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
          weight(s, s2, s3, ... sk, d) - D: a floating point value for whole path 
       
    */
-
+   /*
    //initalize variables
    PATH *pPath;
    PATH *pNODE;
@@ -436,7 +536,7 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
 
    //while a predessor exists
    while(V[v]->pi)
-   {  
+   {  */
      /*if(V[v]->pi == 1)
       {
          cout << ", " << t; 
@@ -445,7 +545,7 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
       {
          cout << ", " << V[v]->pi;
       }*/
-
+   /*
       //cout << "arr[i] = " << i << endl;
       arr[i] = V[v]->pi;
       //u == predessor
@@ -457,14 +557,14 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
       pNODE->vertex = u;
       pNODE->next = pPath;
       v = pNODE->vertex;
-      i++;
-   }
+      i++; 
+   }*/
 
    
    //cout << endl;
-   pNODE = pPath;
+  /* pNODE = pPath;
    pPath = pPath->next;
-   free(pNODE);
+   free(pNODE);*/
    //======================================================//
    /* Possibly More between these lines                    */
    //======================================================//
@@ -481,8 +581,8 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
       cout << ", " <<arr[a];
    }*/
 
-   printf(">\n");
-   printf("The path weight is: %12.4f\n", V[t]->dist);
+   //printf(">\n");
+   //printf("The path weight is: %12.4f\n", V[t]->dist);
    
    
 
