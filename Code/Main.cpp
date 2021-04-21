@@ -12,7 +12,7 @@
 #include <cstring>
 #include <string>  //string class
 //#include <math.h>
-//#include <iostream>
+#include <iostream>
 //#include <fstream>
 using namespace std;
 
@@ -80,8 +80,14 @@ int main(int argc, char *argv[])
     /* ifile Reading */
     //opens network file to be read 
     ifile = fopen(argv[1], "r");
-    //error printing ifilefor(i = 1; i <=m; i++)
+    cout << "testing1" << endl;
+    if(ifile == NULL)
     {
+        cout << "iFile not initalized" << endl;
+    }
+
+    //error printing ifilefor(i = 1; i <=m; i++)
+   /* {
         v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
         if(v_fscanf < 4)
         {
@@ -90,13 +96,21 @@ int main(int argc, char *argv[])
         }
     
         printf("ErrorGLX1: cannot open file for reading.\n");
-    }
+    }*/
 
     //read m n = |V| pVERTEX* V
+    //cout << "M before read" << n << endl;
+    //cout << "N before read" << m << endl;
+
+    v_fscanf = fscanf(ifile, "%d%d", &n, &m);
+    cout << "testing2" << endl;
     if(v_fscanf < 2)
     {
         printf("ErrorGLX2: fscan returns %d.\n", v_fscanf);
     }
+    
+    /*cout << "M READ FROM FILE: " << m << endl;
+    cout << "N READ FROM FILE: " << n << endl;*/
 
     /* allocate memory for adjacency lists */
     //Uses int n from the graph file to 
@@ -112,6 +126,7 @@ int main(int argc, char *argv[])
     //for each m (number of edges)
     for(i = 1; i <=m; i++)
     {
+        //std::cout << "THIS IS I:" << i << endl;
         //scan the file for 
         //int edge_id(name),int u(start index), int v(destination/end vertex), float weight
         v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
@@ -242,12 +257,14 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
+                    //cout << "IF WE MADE IT THIS FAR GG BOIS" << endl;
                     source = source_new;
                     destination = destination_new;
                     flag = flag_new;
 
                     //dijkstras call
                     dijkstra(n, A, V, source, destination, flag);
+                    
                 }
             }
 
@@ -259,15 +276,19 @@ int main(int argc, char *argv[])
             r_value = nextWord(word2);
             if(!r_value)
             {
-                //printf("ErrorGLX4: EOF\n");
+                printf("ErrorGLX4: EOF\n");
                 continue; 
             }
             if(0 == strcmp(word2, "path"))
             {
-                v_fscanf = scanf("%d%d", &s_new, &t_new);
+                v_scanf = scanf("%d%d", &s_new, &t_new);
                 if(v_scanf !=2)
                 {
-                    //printf("ErrorcwGLX5: wrong return value for scanf\n");
+                    //out << "s_new: " <<s_new << endl;
+                    //cout << "t_new: " <<t_new << endl;
+
+                    //for(int x = 0; x <= sizeof(v_fscanf))
+                    printf("ErrorcwGLX5: wrong return value for scanf\n");
                     continue;
                 }
                 else
@@ -303,7 +324,7 @@ int main(int argc, char *argv[])
         }//end of write
         else
         {
-            //printf("ErrorGLX: Bad Input\n");
+            printf("ErrorGLX: Bad Input\n");
             continue;
         }
     }//end of query loop

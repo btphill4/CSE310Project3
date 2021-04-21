@@ -6,6 +6,7 @@
 
 
 #include "Heap.h"
+#include "Graph.h"
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
@@ -25,7 +26,7 @@ HEAP::HEAP(int n)
     //size = 12;	//wrong I think
 
     //element pointer array
-    pELEMENT* arr = new pVERTEX[n + 1];  //dynamically allocated
+    pVERTEX* arr = new pVERTEX[n + 1];  //dynamically allocated
 
     H = arr;
 
@@ -38,7 +39,7 @@ HEAP*	HEAP::initialize(int n)
 	HEAP* heap = new HEAP(n);   //will be dynamically allocated in the constuctor
 
     //testing purposes
-   /* cout << "INSIDE init: capcity=" << heap->getCapacity() << ", size=" 
+   /* //cout << "INSIDE init: capcity=" << heap->getCapacity() << ", size=" 
     << heap->getSize() << endl; */
 
     return heap;
@@ -48,7 +49,7 @@ HEAP*	HEAP::initialize(int n)
 void HEAP::heapPrint(HEAP* a)
 {
 	//print the capity and size
-    cout << "capacity=" << a->capacity << ", size=" 
+    //cout << "capacity=" << a->capacity << ", size=" 
     << a->size << endl;
 	*/
     //print the HEAP from size 1
@@ -64,16 +65,16 @@ void HEAP::heapPrint(HEAP* a)
         //if we are at the end of the arr, don't print a comma
         if(i == a->getSize())
         {
-            cout << arr[i].key << endl;
+            //cout << arr[i].key << endl;
         }
 
         //print everything and put a commma after
         else
         {
-        cout << arr[i].key << ", ";
+        //cout << arr[i].key << ", ";
         }
     }
-    //cout << endl; */
+    ////cout << endl; */
 //} //end heapPrint()
 //==================END Project 1=========================//
 
@@ -88,28 +89,7 @@ void swap(int *x, int *y)
 	*y = temp; 
 } 
 
-//elementSwap 
-void eSwap(pELEMENT *x, pELEMENT *y) 
-{ 
-	pELEMENT temp = *x; 
-	*x = *y; 
-	*y = temp; 
-} 
 
-
-//Return Node value (NOT IN HEAP.H)
-int gParent(int i)
-{
-	return i/2;
-}
-int gLeft(int i)
-{
-	return 2*i;
-}
-int gRight(int i)
-{
-	return ((2 * i) + 1);
-}
 
 //builds a minHeap
 /*
@@ -192,7 +172,7 @@ void HEAP::heapSort(HEAP* a)
 } //end of heapSort
 */
 //returns the root element(doesn't remove element)
-pELEMENT HEAP::getHeapMin(HEAP * a)
+pVERTEX HEAP::getHeapMin(HEAP * a)
 {
 	return a->H[1];
 }
@@ -206,7 +186,7 @@ void HEAP::extractMin(HEAP* a, pVERTEX* V, int f)	//SHOULDN'T BE VOID
 	//will be in main
 	if(a->getSize() < 1)
 	{
-		cout << "heap is empty\n";
+		//cout << "heap is empty\n";
 	}
 	*/
 
@@ -215,7 +195,7 @@ void HEAP::extractMin(HEAP* a, pVERTEX* V, int f)	//SHOULDN'T BE VOID
 	//keyPtr->key = a->H[1]->key;
 	//a->H[1]->key = *key;
 	/*
-	cout << "Deleted key: " << a->H[1]->key << endl;
+	//cout << "Deleted key: " << a->H[1]->key << endl;
 
 	int min;
 	min = a->H[0]->key;
@@ -256,7 +236,7 @@ void decreaseKey(HEAP* a, int i, int value)
 	
 	if (value > a->H[i-1]->key)
 	{
-		cout << "key is larger than current key";
+		//cout << "key is larger than current key";
 	}
 	a->H[i]->key = value;
 	while (i > 1 && a->H[gParent(i)]->key > a->H[i]->key)
@@ -269,7 +249,7 @@ void decreaseKey(HEAP* a, int i, int value)
 	Xue Slides
 	if key < a[i]
 	{
-		cout << "Error";
+		//cout << "Error";
 	}
 	else
 	a[i] = key;
@@ -290,6 +270,7 @@ void decreaseKey(HEAP* a, int i, int value)
 //element into the heap pointed to by heap
 int HEAP::insert(HEAP* heap, pVERTEX* V, pELEMENT obj)
 {
+	//cout << "INSERT HEAP SIZE: " << heap->size << endl; 
 	if(heap->size >= heap->capacity)
 	{
 		printf("Error in HeapInsert: Heap full...\n");
@@ -316,10 +297,9 @@ int HEAP::insert(HEAP* heap, pVERTEX* V, pELEMENT obj)
 
 void heapFree(HEAP *heap) //still probably wrong
 {
-	free(heap);	//Possibly should be it idk if not for loop sets values to null
 	free(heap->H);
+	free(heap);	//Possibly should be it idk if not for loop sets values to null
 	
-
 }
 
 //decrease the key value using position
@@ -381,31 +361,181 @@ void HEAP::MovingUp (HEAP *heap, pVERTEX* V, int pos)
 
 }
 
-void HEAP::MovingDown(HEAP *heap, pVERTEX* V, int pos, int flag)
-{
-	//like minHeapify swapping the parents until the order is restored
 
+//elementSwap 
+void eSwap(float x,  float y) 
+{ 
+	float temp = x; 
+	x = y; 
+	y = temp; 
+} 
+//Return Node value (NOT IN HEAP.H)
+int gParent(int i)
+{
+	return i/2;
+}
+int gLeft(int i)
+{
+	return 2*i;
+}
+int gRight(int i)
+{
+	return ((2 * i) + 1);
+}
+void HEAP::MovingDown(HEAP* a, pVERTEX* V, int pos, int flag)
+{
+	//pELEMENT arr = a->getH();
+	//int l = 2*i + 1;
+	//int r = 2*i + 2;
+	////cout << "M_testing1 " << endl;
+	int left = gLeft(pos);
+	int right = gRight(pos);
+	int root = pos;
+	
+	////cout << "M_testing2 " << endl;
+	//cout << "left: " << left << " right: " << right << " root " << root << endl;
+	
+	
+	
+	/************************************************************************/
+	//ELEMENT *keyPtr = new ELEMENT(); //this may be wrong
+	//float *keyPtr;
+	////cout << "M_testing3 " << endl;
+	pELEMENT keyPtr = (VERTEX *) malloc(size+1);
+	//VERTEX *keyPtr = new VERTEX();
+	/***********************************************************************/
+	////cout << "M_testing4 " << endl;
+
+	keyPtr->key = a->H[root]->key;	//THIS MAY BE WRONG
+
+	////cout << "M_testing4.5 keyPtr == " << keyPtr->key << endl;
+	//cout << "a size: " << size << " a->H[root]->key :" << a->H[root]->key << endl;
+	//Logic should be right but the pointer issue
+	//cout << "SHOULDN'T BREAK HERE " <<endl;
+	if(left >= a->size) //&& a->H[left]->key <= a->H[pos]->key)
+	{
+		////cout << "M_testing55 " << endl;
+		a->H[root] = a->H[left];
+		//root = left;
+	}
+	/*if(a->H[left]->key <= a->H[pos]->key) //&& a->H[left]->key <= a->H[pos]->key)
+	{
+		////cout << "M_testing55 " << endl;
+		a->H[root] = a->H[left];
+		//root = left;
+	}*/
+	else
+	{
+		////cout << "M_testing66 " << endl;
+		a->H[root] = a->H[pos];
+		//root = i;
+	}
+	////cout << "M_testing12 " << endl;
+	if(right <= a->size && a->H[right]->key <= a->H[pos]->key)
+	{
+		////cout << "M_testing7 " << endl;
+		a->H[root] = a->H[right];
+		//root = right;
+	}
+	////cout << "M_testing13 " << endl;
+	if(root != pos)
+	{
+		////cout << "M_testing8 " << endl;
+		eSwap(a->H[root]->key, a->H[pos]->key);
+		MovingDown(a, V, root, flag);
+	}
+	////cout << "M_testing14 " << endl;
+
+} //END minHeapify()
+
+
+//this might need to be change to pELEMENT HEAP::deleteMin
+pVERTEX HEAP::deleteMin(HEAP* heap, pVERTEX* V, int flag)
+{
+	pVERTEX min, last;	//might be pVERTEX or pELEMENT
+	//cout << "H_Testing1 HEAP SIZE in DELETEMIN: " << heap->size << endl;
+	if(heap->size <= 0)
+	{
+		//cout << "H_Testing2" << endl;
+		printf("Error in DeleteMin: heap empty\n");
+		return NULL;
+	}
+	else
+	{
+	////cout << "H_Testing3" << endl;
+	min = heap->H[1];
+	////cout << "H_Testing4 HEAPSIZE: " << heap->size << endl;
+	last = heap->H[heap->size--]; //THIS SETS THE SIZE TO ZERO
+	////cout << "H_Testing5 HEAPSIZE: " << heap->size  << endl;
+	heap->H[1] = last;
+	////cout << "H_Testing6" << endl;
+	V[heap->H[1]->vertex]->pos = 1;
+	//	heap->H[1]->pos = 1;
+	////cout << "H_Testing7" << endl;
+	////cout << "H_Testing8" << endl;
+	MovingDown(heap, V, 1, flag);
+	////cout << "H_Testing9" << endl;
+	V[min->vertex]->pos = 0;
+
+	return min;
+	}
 }
 
-pELEMENT HEAP::deleteMin(HEAP* heap, pVERTEX* V, int flag)
+void HEAP::minHeap(HEAP* heap, int index)
 {
-	pELEMENT min, last;	//might be pVERTEX or pELEMENT
+	int smallest;
+	int newLeft, newRight;
+
+	int left = gLeft(index);
+	int right = gRight(index);
+	int root = index;
+
+	if(left <= heap->size && heap->H[left]->key <= heap->H[index]->key)
+	{
+		smallest = left;
+	}
+	else
+	{
+		smallest = index;
+	}
+	if(right <= heap->size && heap->H[right]->key < heap->H[smallest]->key)
+	{
+		smallest = right;
+	}
+
+	if(smallest != 1)
+	{
+		pELEMENT element = heap->H[smallest];
+		heap->H[smallest] = heap->H[index];
+		heap->H[index] = element;
+
+		element = heap->H[smallest];
+		heap->H[smallest] = heap->H[index];
+		heap->H[index] = element;
+
+		minHeap(heap,smallest);
+
+	}
+}
+
+pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
+{
+	pELEMENT min, last;
 
 	if(heap->size <= 0)
 	{
 		printf("Error in DeleteMin: heap empty\n");
 		return NULL;
 	}
+
 	else
 	{
-	min = heap->H[1];
-	last = heap->H[heap->size--]; 
-	heap->H[1] = last;
-	V[heap->H[1]->vertex]->pos = 1;
-	MovingDown(heap, V, 1, flag);
-	V[min->vertex]->pos = 0;
+		min = heap->H[1];
+		last = heap->H[heap->size--];
+		heap->H[1] = last;
 
-	return min;
+		V[heap->H[1]->vertex]->pos = 1;
+		heap->minHeapify(heap, min->vertex);	
 	}
 }
 
