@@ -401,14 +401,15 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
    PATH *pPath;
    PATH *pNODE;
    int u, v;
-
-
+   int arr[n + 1];
    //using a stack to and pushing its values
    pNODE = (PATH *) malloc(sizeof(PATH));
    pNODE->vertex = t;
    pNODE->next = NULL;
    pPath = pNODE;
    v = pNODE->vertex;
+
+   int i = 1;
    //cout << "PRINTPATH CHECK: " << pNODE->vertex << endl;
    //if the detination is unsearched
    if(V[t]->color == 0)
@@ -436,30 +437,50 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
    //while a predessor exists
    while(V[v]->pi)
    {  
+     /*if(V[v]->pi == 1)
+      {
+         cout << ", " << t; 
+      }
+      else
+      {
+         cout << ", " << V[v]->pi;
+      }*/
+
+      //cout << "arr[i] = " << i << endl;
+      arr[i] = V[v]->pi;
       //u == predessor
       u = V[v]->pi;
       pNODE = (PATH *) malloc(sizeof(PATH));
+
 
       //save path
       pNODE->vertex = u;
       pNODE->next = pPath;
       v = pNODE->vertex;
-      
+      i++;
    }
 
+   
+   //cout << endl;
    pNODE = pPath;
    pPath = pPath->next;
    free(pNODE);
    //======================================================//
    /* Possibly More between these lines                    */
    //======================================================//
-   while (pPath)
+   /*while (pPath)
    {
       pNODE = pPath;
       printf(", %d", pNODE->vertex);
       pPath = pPath->next;
       free(pNODE);
-   }
+   }*/
+   /*cout << "SIZE OF PATH" << sizeof(pPath);
+   for(int a = sizeof(pPath); a >= 0; a--)
+   {
+      cout << ", " <<arr[a];
+   }*/
+
    printf(">\n");
    printf("The path weight is: %12.4f\n", V[t]->dist);
    

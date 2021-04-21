@@ -247,6 +247,12 @@ int main(int argc, char *argv[])
                 printf("ErrorGLX3: wrong return value for scanf\n");
                 continue;
             }
+            /******************************************************************************
+            if(source_new < 0)
+            {
+                printf("Query: %s %d %d %d\n",
+                    word, source_new, destination_new, flag_new);
+            }*****************************************************************/
             else
             {
                 printf("Query: %s %d %d %d\n", 
