@@ -103,7 +103,6 @@ int main(int argc, char *argv[])
     //cout << "N before read" << m << endl;
 
     v_fscanf = fscanf(ifile, "%d%d", &n, &m);
-    //cout << "testing2" << endl;
     if(v_fscanf < 2)
     {
         printf("ErrorGLX2: fscan returns %d.\n", v_fscanf);
@@ -126,7 +125,6 @@ int main(int argc, char *argv[])
     //for each m (number of edges)
     for(i = 1; i <=m; i++)
     {
-        //std::cout << "THIS IS I:" << i << endl;
         //scan the file for 
         //int edge_id(name),int u(start index), int v(destination/end vertex), float weight
         v_fscanf = fscanf(ifile, "%d%d%d%f", &edge_id, &u, &v, &w);
@@ -262,7 +260,6 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    //cout << "IF WE MADE IT THIS FAR GG BOIS" << endl;
                     source = source_new;
                     destination = destination_new;
                     flag = flag_new;
