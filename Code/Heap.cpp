@@ -307,37 +307,15 @@ void heapFree(HEAP *heap) //still probably wrong
 //int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, int newKey)
 int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, float newKey)
 {
-	/*cout << endl <<"BEFORE HEAPxueDecreseKey" << endl;  
-	cout << "pos: " << pos << endl;
-	cout << "heap->size: " << heap->size << endl;
-	cout << "newKey: " << newKey << endl;
-	cout << "Heap key: " << heap->H[pos]->key << endl << endl;*/
-
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
 	//cout << "(pos > heap->size )" << pos << "<" << heap->size << endl;
 	if(pos < 1 || pos > heap->size || newKey >= heap->H[pos]->key)
 	{	
-		/*cout << "uhhhh" << endl;
-		if(pos < 1)
-		{
-			cout << "(pos < 1)" << endl;
-		}
-		if(pos > heap->size )
-		{
-			cout << "(pos > heap->size )" << pos << "<" << heap->size << endl;
-		}
-		if(newKey >= heap->H[pos]->key)
-		{
-			cout << "(newKey > heap->H[pos]->key)" << endl;
-		}*/
-		printf("Error: invalid call to DecreaseKey\n");
-		//return 0;
-		
+		//do nothing	
 	}
 	//else set key = newKey
 	else
 	{
-	//cout << "XueDecreaseKey Success" << endl;
 	heap->H[pos]->key = newKey;
 	//cout << "before moving up =======================new heap->H[pos]->key: " << heap->H[pos]->key << endl;
 	MovingUp(heap, V, pos);
@@ -559,7 +537,7 @@ pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
 
 	if(heap->size <= 0)
 	{
-		printf("Error in DeleteMin: heap empty\n");
+		//printf("Error in DeleteMin: heap empty\n");
 		return NULL;
 	}
 		//cout << endl << "BEFORE EXTRACT MIN HEAP SIZE: " << heap->size << endl;

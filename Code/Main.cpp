@@ -172,7 +172,6 @@ int main(int argc, char *argv[])
         }//end if Undirected Graphs
 
     }//end for loop
-
     /*
     //BGN for adjacency lists
     for(i = 1; i<=n; i++)
