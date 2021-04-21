@@ -112,7 +112,8 @@ class HEAP
     void MovingDown(HEAP *a, pVERTEX* V, int pos, int flag);
     int insert(HEAP* a, pVERTEX* V, pELEMENT obj); 
     pVERTEX deleteMin(HEAP* heap, pVERTEX* V, int flag);
-    pVERTEX extractMin(HEAP* a, pVERTEX* V, int f);
+    pELEMENT extractMin(HEAP* heap, pVERTEX* V);
+    void minHeap(HEAP* heap, int i);
 };
 #endif
 /*
