@@ -35,13 +35,12 @@ using namespace std;
  C hanges: 1: initialize minheap with only the vertex source
              Note the total number of elements the heap may store is its CAPACITY and current size is set to 1
              will not store nodes with key element inifinity
-          2: During relaxation period, the key field of a vertex v that is not in the heap is reduced from INF to a real number and inserted 
+            2: During relaxation period, the key field of a vertex v that is not in the heap is reduced from INF to a real number and inserted 
              into the heap
-          3: instead of extract-min and relaxations until the heap is empty, the algorithm should terminate when empty or 
+            3: instead of extract-min and relaxations until the heap is empty, the algorithm should terminate when empty or 
              if the destination is extracted from the heap, your algorthims should not perform any relaxations
-        
 
-/*
+
 G = graph
 s = source node
 t = destination node
@@ -327,9 +326,11 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
    else if(V[t]->color == 2)
    {
       printf("Shortest path: <"); //printf("Shortest path: <%d", s);
-      for(int i =iterator-1; i>=0 ; i--){
+      for(int i =iterator-1; i>=0 ; i--)
+      {
          printf("%d",arr2[i]);
-         if(i > 0){
+         if(i > 0)
+         {
                printf(", ");
          }
       }
@@ -353,105 +354,6 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
 
 
    //==========================================================================
-   /*
-      Shortest path from s to d can be extracted using the predecessor
-      The output has two lines:
-      Shortest path: <s, s2, s3, ..., sk, d>
-      The path weight is: weight(s, s2, s3, ..., sk, d)
-         where predecessor(s2) = s, (s3) = 2 and 
-         weight(s, s2, s3, ... sk, d) - D: a floating point value for whole path 
-      
-   */
-   /*
-   //initalize variables
-   PATH *pPath;
-   PATH *pNODE;
-   int u, v;
-   int arr[n + 1];
-   //using a stack to and pushing its values
-   pNODE = (PATH *) malloc(sizeof(PATH));
-   pNODE->vertex = t;
-   pNODE->next = NULL;
-   pPath = pNODE;
-   v = pNODE->vertex;
-
-   int i = 1;
-   //cout << "PRINTPATH CHECK: " << pNODE->vertex << endl;
-   //if the detination is unsearched
-   if(V[t]->color == 0)
-   {  //if the destination is greater than 1, greater than the number of edges, or t == destination
-      if(destination < 1 || destination > n || t == destination)
-      {
-         printf("No %d-%d path exists.\n", s,t);
-         return;
-      }
-      else
-      {
-         printf("No %d-%d path has been computed.\n", s, t);
-         return;
-      }
-   }
-  else if(V[t]->color == 1)
-   {
-      printf("Path not known to be shortest: <%d", s);
-   }
-   else if(V[t]->color == 2)
-   {
-      printf("Shortest path: <%d", s);
-   }
-
-   //while a predessor exists
-   while(V[v]->pi)
-   {  */
-     /*if(V[v]->pi == 1)
-      {
-         cout << ", " << t; 
-      }
-      else
-      {
-         cout << ", " << V[v]->pi;
-      }*/
-   /*
-      //cout << "arr[i] = " << i << endl;
-      arr[i] = V[v]->pi;
-      //u == predessor
-      u = V[v]->pi;
-      pNODE = (PATH *) malloc(sizeof(PATH));
-
-
-      //save path
-      pNODE->vertex = u;
-      pNODE->next = pPath;
-      v = pNODE->vertex;
-      i++; 
-   }*/
-
-   
-   //cout << endl;
-  /* pNODE = pPath;
-   pPath = pPath->next;
-   free(pNODE);*/
-   //======================================================//
-   /* Possibly More between these lines                    */
-   //======================================================//
-   /*while (pPath)
-   {
-      pNODE = pPath;
-      printf(", %d", pNODE->vertex);
-      pPath = pPath->next;
-      free(pNODE);
-   }*/
-   /*cout << "SIZE OF PATH" << sizeof(pPath);
-   for(int a = sizeof(pPath); a >= 0; a--)
-   {
-      cout << ", " <<arr[a];
-   }*/
-
-   //printf(">\n");
-   //printf("The path weight is: %12.4f\n", V[t]->dist);
-   
-   
-
 
    /*backtrace the predecossor V[destination]->pi and V[destination]->weight 
    and then go to V[pi]->pi and V[pi]->weight etc and store values to list, then reverse the list

@@ -13,10 +13,6 @@
 #include <math.h>
 using namespace std;
 
-//Need for project 3
-//pVERTEX* V;
-
-
 
 //constructor
 HEAP::HEAP(int n)
@@ -29,8 +25,6 @@ HEAP::HEAP(int n)
     pVERTEX* arr = new pVERTEX[n + 1];  //dynamically allocated
 
     H = arr;
-
-	
 }
 
 //initialize, return HEAP* ptr
@@ -160,7 +154,7 @@ int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, float newKey)
 	//cout << "XueDecreaseKey Success" << endl;
 	heap->H[pos]->key = newKey;
 	MovingUp(heap, V, pos);
-	//eturn 1;	//this might need to return an int probably like a bool maybe?
+	
 	}
 	return 1;
 }
@@ -168,24 +162,20 @@ int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, float newKey)
 //Moving up moves the element to its new position and sets it parents values
 void HEAP::MovingUp (HEAP *heap, pVERTEX* V, int pos)
 {
-	//cout << "Moving up segfault" << endl;
 
 	//declare variables
 	int parent;
 	pELEMENT temp; //might need to change 
 
 	parent = pos/2; 
-	//cout << endl << "do I reach this tho" << endl;
 	/*
 	Check if int pos > 1 {1,2,3...} else out of bounds
 	and that the new elements new position has a higher key value(moving UP)
 	and sets the position and new key value accordingly
 	*/
-	//cout << "CURRENT POSITION: " << pos << endl;
-	//cout <<  " heap->H[pos]->key: " << heap->H[pos]->key << " < heap->H[parent]->key: " << heap->H[parent]->key << endl;
+	
 	if(pos > 1 && heap->H[pos]->key < heap->H[parent]->key)
 	{	
-		//cout << "ENTER MovingUp" << endl;
 		//temporary variable to hold current position integer
 		temp = heap->H[pos];
 
@@ -195,7 +185,7 @@ void HEAP::MovingUp (HEAP *heap, pVERTEX* V, int pos)
 		//sets the parent position to the temp value of the old position for current node
 		heap->H[parent] = temp;
 
-		//================================Might need to change these=============
+		//==============Might need to change these=============
 		//go to vertex array and update the pos there too
 		V[heap->H[pos]->vertex]->pos = pos;	//current vertex position is updated in vertex array
 		V[heap->H[parent]->vertex]->pos = parent; //the parents position gets updated in the vertex array
@@ -272,15 +262,10 @@ void HEAP::MovingDown(HEAP* a, pVERTEX* V, int pos, int flag)
 void HEAP::minHeap(HEAP* heap, pVERTEX* V, int index)
 {
 	int smallest = index;
-	
-
 	int left = gLeft(index);
 	int right = gRight(index);
-	//int root = index;
 
-	//if(heap->size != 0)
-	//{
-		//cout << "HEAP SIZE IS ONE DUMBASS" << endl;
+	
 	
 		if(left <= heap->size && heap->H[left]->key <= heap->H[index]->key)
 		{
@@ -312,7 +297,7 @@ void HEAP::minHeap(HEAP* heap, pVERTEX* V, int index)
 			std::swap(heap->H[smallest]->key, heap->H[index]->key);
 			minHeap(heap, V, smallest);
 		}
-	//}
+	
 }
 
 pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
@@ -324,7 +309,6 @@ pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
 		//printf("Error in DeleteMin: heap empty\n");
 		return NULL;
 	}
-		//cout << endl << "BEFORE EXTRACT MIN HEAP SIZE: " << heap->size << endl;
 
 		min = heap->H[1];
 		last = heap->H[heap->size--];
@@ -333,6 +317,5 @@ pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
 		V[heap->H[1]->vertex]->pos = 1;
 		heap->minHeap(heap, V, min->vertex);	
 		V[min->vertex]->pos = 0;
-		//cout << "After EXTRACT MIN HEAP SIZE: " << heap->size << endl << endl;
 		return min;
 }
