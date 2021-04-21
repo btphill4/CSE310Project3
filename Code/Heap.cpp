@@ -13,17 +13,11 @@
 #include <math.h>
 using namespace std;
 
-//Need for project 3
-//pVERTEX* V;
-
-
-
 //constructor
 HEAP::HEAP(int n)
 {
 	capacity = n;
 	size = 0; //correct I think
-    //size = 12;	//wrong I think
 
     //element pointer array
     pVERTEX* arr = new pVERTEX[n + 1];  //dynamically allocated
