@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     /* ifile Reading */
     //opens network file to be read 
     ifile = fopen(argv[1], "r");
-    cout << "testing1" << endl;
+    //cout << "testing1" << endl;
     if(ifile == NULL)
     {
         cout << "iFile not initalized" << endl;
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     //cout << "N before read" << m << endl;
 
     v_fscanf = fscanf(ifile, "%d%d", &n, &m);
-    cout << "testing2" << endl;
+    //cout << "testing2" << endl;
     if(v_fscanf < 2)
     {
         printf("ErrorGLX2: fscan returns %d.\n", v_fscanf);
@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
 
                     //dijkstras call
                     dijkstra(n, A, V, source, destination, flag);
-                    
+                    continue;
                 }
             }
 

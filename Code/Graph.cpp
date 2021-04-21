@@ -209,19 +209,14 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
    //initalize variables and stuctures
    pNODE node;
    //HEAP *heap = new HEAP();
-   pVERTEX element;
-
+   //pVERTEX element;
+   pELEMENT element;
    int u, v, i;
    float w;
    int pos;
 
-   //if V exists
-   if(!V)
-   {
-      //cout << "Error: in V(initialize)" << endl;
-   }
+   float oldKey;
 
-   //cout << "D_Testing1" << endl;
 	//for each v (inside of) V[G] set v values to defaults
    //for(i = 1; i <= sizeof(V); i++)
    for(i = 1; i <= n; i++)
@@ -231,25 +226,26 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
       V[i]->pi = 0;  //0 for nil
       //V[i]->dist = INF;
    }
-   //cout << "D_Testing2" << endl;
+   
+
    //set source node to default source values
-   V[source]->color = 0;   //white color
+   V[source]->color = 1;   //grey color
    //V[source]->pi = 0;
    V[source]->dist = 0;    //distance to itself
 
-   //heap and element data structures h0
-
+   //heap and element data structures 
    HEAP* heap = heap->initialize(n);
 
-   //cout << "D_Testing3" << endl;
-
+   
    //create element pointer 
    //element = (ELEMENT *) malloc(sizmaeof(ELEMENT));
-   
     
-   element = (VERTEX *) malloc(sizeof(VERTEX));   //should possibly be (pVertex *)
+   //element = (VERTEX *) malloc(sizeof(VERTEX));   //should possibly be (pVertex *)
+   element = (ELEMENT*) malloc(sizeof(ELEMENT));
    element->vertex = source;
-   element->key = 0; //key value for source node
+   //element->key = 0; //key value for source node
+   element->key = V[source]->dist;
+
    heap->insert(heap, V, element);
 
    //cout << "HEAP SIZE AFTER INSERT " << heap->size << endl;
@@ -263,133 +259,149 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
    //cout << "D_Testing6" << endl;
    while(heap->size != 0)
    {  
-      //cout << "D_Testing7/HEAPSIZE: " << heap->size << endl;
-      //pVERTEX u = heap->deleteMin(heap, V, f);
-      //element = heap->getHeapMin(heap);
-      element = heap->deleteMin(heap, V, f);
+      //element = heap->deleteMin(heap, V, f);
+       //heap->heapPrint(heap); 
       //cout << "DELETEMIN CALL " << endl;
-
-      //cout << endl << element << endl;
-
+      element = heap->extractMin(heap, V);
+      
       //print delete information
       if(f == 1)
       {
-         //cout << "D_Testing7.5" << endl;
          printf("Delete vertex %d, key=%12.4f\n", element->vertex, element->key); 
       }
+       //heap->heapPrint(heap); 
 
-      //cout << "D_Testing8" << endl;
       //sets u as the current element pointer vertex
       u = element->vertex;
-      V[u]->color = 1;  //searched
-      //cout << "THIS BETTER BE SET TO 1 ->" << V[u]->color << endl << endl;
 
-      //cout << "D_Testing9" << endl;
+      V[u]->color = 2;  //searched AND ADDED 
+      
+      
+      //==================what I was doing====================
       //the destination is found
-      if(element->vertex == destination)
+      /*if(element->vertex == destination)
       {
-         V[u]->color == 2;
+         //V[u]->color == 2;
          //cout << "D_Testing10" << endl;
          break;
+      }*/
+      //other method//
+      if(u == destination)
+      {  
+         cout << "U == DESINTATION" << endl;
+         break; //source found
       }
-      
-      //free(element);
+
+      free(element);
 
       //cout << "D_Testing11" << endl;
       node = A[u];
 
       //else set values to the next node
-      while(node)
+      while(node != NULL)
       {
-         //cout << "D_Testing12" << endl;
+         //cout << "ENTER WHILE(NODE)" << endl;
          v = node->v;
          w = node->w;
-
+          //heap->heapPrint(heap);
          //if next node is unsearched
          if(V[v]->color == 0)
          {
-            //cout << "D_Testing13(IF COLOR == 0)" << endl << endl;
-            V[v]->dist = V[u]->dist + w;
-            V[v]->pi = u;
+            //cout << "CURRENT: V[" << v << "](IF COLOR == 0)" << endl << endl;
             V[v]->color = 1;
+            V[v]->pi = u;
+            V[v]->dist = V[u]->dist + w;
+            
 
-            //cout << "V[" << v << "].color: " << V[v]->color << endl;
-            //cout << "V[" << v << "].pi: " << V[v]->pi << endl;
-            //cout << "V[" << v << "].dist: " << V[v]->dist << endl;
+            
 
-            V[v]->pos = heap->size + 1;
+            //V[v]->pos = heap->size + 1;
             //cout << "D_Testing14" << endl;
             
-            element = (VERTEX *) malloc(sizeof(VERTEX));
+            //element = (VERTEX *) malloc(sizeof(VERTEX));
+            element = (ELEMENT*) malloc(sizeof(ELEMENT));
             element->vertex = v;
             element->key = V[v]->dist;
 
             //cout << "D_Testing15" << endl;
-            heap->insert(heap, V, element);  
+            heap->insert(heap, V, element); 
+            
+            cout << endl;
+            heap->heapPrint(heap);
+            cout << endl;
+            
+            //cout << "HEAP PRINT INSIDE OF V[v]->color == 0" << endl;
+            // //heap->heapPrint(heap); 
 
             //FLAG for printing MIGHT NOT BE HERE
             if(f == 1)
             {
                //print insertion information
-               printf("Inserted %d, dist=%12.4f\n", v, V[v]->dist);
+               printf("Insert vertex %d, key=%12.4f\n", v, V[v]->dist);
+               /*cout << "V[" << v << "].color: " << V[v]->color << endl;
+               cout << "V[" << v << "].pi: " << V[v]->pi << endl;
+               cout << "V[" << v << "].dist: " << V[v]->dist << endl;
+               cout << endl*/
+               // //heap->heapPrint(heap);
             }
-         }//end if
-
-         //if node is already checked
-         else if(V[v]->dist > V[u]->dist + w)
-         //else //(V[v]->dist > V[u]->dist + w)
-         {
-            //ELSE STATEMENT 
-            //cout << "WE NEED THIS SHIT TO WORK" << endl;
-            //prints insertion information
-            if(f == 1)
-            {
-               //print insertion information
-               //printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
-               printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
-            }
-
-            //sets the next nodes values to the current 
-            //cout << "D_Testing16" << endl;
-            V[v]->dist = V[u]->dist + w; //I think w should be called from V[u]->w or something
-            V[v]->pi = u;
-
-            //position maintence
-            pos = V[v]->pos;
-            //cout << "D_Testing17" << endl;
-            heap->xueDecreaseKey(heap, V, pos, V[v]->dist);
             
-         }
+            //end if
 
-         //else move to next node
-         //cout << "node -> next: " << node->next << endl;
+            //cout << endl <<"If DecreaseKeyCheck: V[v]-> dist: " << V[v]->dist << "| V[u]->dist + w: " << V[u]->dist + w << endl;
+            //if node is already checked
+            else if(V[v]->dist > V[u]->dist + w)
+            //else //(V[v]->dist > V[u]->dist + w)
+            {
+               oldKey = V[v]->dist;
+               V[v]->dist = V[u]->dist + w;
+               V[v]->pi = u;
+               
+               if (f == 1)
+                    printf("Decrease key of vertex %d, from\t %12.4f to \t %12.4f \n",v,oldKey,V[v]->dist);
+
+               heap->xueDecreaseKey(heap, V, V[v]->pos, V[v]->dist);
+                
+            
+               /*
+               //sets the next nodes values to the current 
+               //cout << "D_Testing16" << endl;
+               oldKey = V[v]->dist;
+               V[v]->dist = V[u]->dist + w; //I think w should be called from V[u]->w or something
+               V[v]->pi = u;
+
+               //position maintence
+               //pos = V[v]->pos; //<------- this may still be needed
+               //cout << "D_Testing17" << endl;
+               
+               
+
+               heap->xueDecreaseKey(heap, V, V[v]->pos, V[v]->dist);
+
+               if(f == 1)
+               {
+                  //print insertion information
+                  //printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
+                  printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
+               }*/
+            }//end else if
+
+            //else move to next node
+            //cout << "node -> next: " << node->next << endl;
+
+            //cout << "Enter Next Node" << endl;
+            
+         }//end if(color == 0)   
          node = node -> next;
-      }//end while(node)
+         
+         
+         //return 0; //need to return something I THINK FOR QUERY LOOP
+      }//end while(!NODE)
 
-      return 1; //need to return something
    }//end while(heap->size)
 
+   //cout << endl <<"END DIJIKSTRAS" << endl;
    return 1;
-
-   /*//I THINK WE STILL NEED PRINTING INFORMATION
-    if(f ==1)
-   {
-      for(v=1; v <= n; v++)
-      {
-         if(V[v]->color == 0)
-         {
-            printf("V[%7d].dist=    inifinity, ", v);
-         }
-         else
-         {
-            printf("V[%7d].dist= %12.4f, ", v, V[v]->dist);
-         }
-         printf("V[%7d].pi=%d, ", v, V[v]->pi);
-         printf("V[%7d].pos=%d\n", v, V[v]->pos);
-      }
-   }*/
-}
-
+}//end dijkstras
 /** 
 For "Write Path" in main
 Write path scans for &s_new(new source node) and &t_new(new destination node)  
@@ -418,7 +430,7 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
    pNODE->next = NULL;
    pPath = pNODE;
    v = pNODE->vertex;
-
+   //cout << "PRINTPATH CHECK: " << pNODE->vertex << endl;
    //if the detination is unsearched
    if(V[t]->color == 0)
    {  //if the destination is greater than 1, greater than the number of edges, or t == destination
@@ -433,11 +445,11 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
          return;
       }
    }
-   /*else if(V[t]->color == 1)
+  else if(V[t]->color == 1)
    {
       printf("Path not known to be shortest: <%d", s);
-   }*/
-   else //if(V[t]->color == 2)
+   }
+   else if(V[t]->color == 2)
    {
       printf("Shortest path: <%d", s);
    }
@@ -458,9 +470,10 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
 
    pNODE = pPath;
    pPath = pPath->next;
-   //free(pNODE);
-
-   /* More between these lines*/
+   free(pNODE);
+   //======================================================//
+   /* Possibly More between these lines                    */
+   //======================================================//
    while (pPath)
    {
       pNODE = pPath;
@@ -498,25 +511,5 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
 
 }//end printPath
 
-//use to compute the weight between two nodes MAY NOT NEED
-float get_weight(pNODE* A, pVERTEX* V, int u, int v)
-{
-   pNODE node;
-   float w;
-   //set the node(node being manipulated) to the adjaceny lists first node(u)
-   node = A[u];
-
-   if(node)
-   {
-      w = V[u]->dist + V[v]->dist;
-      return w;
-   }
-   else
-   {
-      printf("Error in get_Weight\n");
-      return V[u]->dist; //I dont think this is right
-   }
-
-}
 
 

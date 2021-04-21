@@ -23,10 +23,6 @@ class VERTEX
     //GRAPH methods HE HAS NO METHODS IN HERE
     VERTEX();
     
-    void addEdge(int u, int v, int w);
-
-    void shortestPath(int s);   //shortest path from s
-    
 };
 //allocate memory with V = (VERTEX *) calloc(n+1, sizeof(VERTEX));
 typedef VERTEX *pVERTEX; 
@@ -85,8 +81,6 @@ int dijkstra(int n, pNODE *A, pVERTEX* V, int source, int destination, int f);
 void printPath(int n, int source, pVERTEX* V, int destination, int s, int t);
 //void writePath();
 
-//may not need this one
-void addEdge(int u, pVERTEX* V, int v, int w);
 
 #endif
 /******************* End Graph.h*************************/

@@ -107,13 +107,13 @@ class HEAP
 
     //project 3 methods
     void heapFree(HEAP *a);
-    int xueDecreaseKey(HEAP *a, pVERTEX* V, int pos, int newKey);
+    int xueDecreaseKey(HEAP *a, pVERTEX* V, int pos, float newKey);
     void MovingUp (HEAP *a, pVERTEX* V,int pos);
     void MovingDown(HEAP *a, pVERTEX* V, int pos, int flag);
     int insert(HEAP* a, pVERTEX* V, pELEMENT obj); 
     pVERTEX deleteMin(HEAP* heap, pVERTEX* V, int flag);
     pELEMENT extractMin(HEAP* heap, pVERTEX* V);
-    void minHeap(HEAP* heap, int i);
+    void minHeap(HEAP* heap, pVERTEX* V, int i);
 };
 #endif
 /*

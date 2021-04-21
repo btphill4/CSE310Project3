@@ -44,20 +44,20 @@ HEAP*	HEAP::initialize(int n)
 
     return heap;
 }
-/*
+
 //print the objects of the heap
 void HEAP::heapPrint(HEAP* a)
 {
 	//print the capity and size
     //cout << "capacity=" << a->capacity << ", size=" 
-    << a->size << endl;
-	*/
+    //cout << a->size << endl;
+	cout << "Current Heap: ";
     //print the HEAP from size 1
-   /* pVERTEX arr = a->getH();
+    pELEMENT* arr = a->H;
     for(int i = 1; i <= a->size; i++)
     {
         //if key is == 0, break the for loop
-        if(arr[i].key == 0)
+        if(arr[i]->key == 0)
         {
             break;
         }
@@ -65,17 +65,17 @@ void HEAP::heapPrint(HEAP* a)
         //if we are at the end of the arr, don't print a comma
         if(i == a->getSize())
         {
-            //cout << arr[i].key << endl;
+            cout << arr[i]->key << endl;
         }
 
         //print everything and put a commma after
         else
         {
-        //cout << arr[i].key << ", ";
+        cout << arr[i]->key << ", ";
         }
     }
     ////cout << endl; */
-//} //end heapPrint()
+} //end heapPrint()
 //==================END Project 1=========================//
 
 //=================Project 2 Methods=================//
@@ -274,16 +274,16 @@ int HEAP::insert(HEAP* heap, pVERTEX* V, pELEMENT obj)
 	if(heap->size >= heap->capacity)
 	{
 		printf("Error in HeapInsert: Heap full...\n");
-		return 1;
+		return 0;
 	}
 	heap->size++;
 	heap->H[heap->size] = obj; 
 	heap->H[heap->size]->pos = heap->size;
 	//another version
-	//V[heap->H[heap->size].vertex].pos = heap->size;
+	V[heap->H[heap->size]->vertex]->pos = heap->size;
 
 	MovingUp(heap, V, heap->size);
-	return 0;
+	return 1;
 
    //added element, size++ ADD TO MAIN MAYBE
    /*NOT really sure what this is tbh
@@ -303,21 +303,39 @@ void heapFree(HEAP *heap) //still probably wrong
 }
 
 //decrease the key value using position
-int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, int newKey)
+//int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, int newKey)
+int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, float newKey)
 {
+	/*cout << "pos: " << pos << endl;
+	cout << "heap->size: " << heap->size << endl;
+	cout << "newKey: " << newKey << endl;
+	cout << "Heap key: " << heap->H[pos]->key << endl;*/
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
-	if(pos<1 || pos > heap->size || newKey >= heap->H[pos]->key)
-	{
+	if(pos < 1 || pos > heap->size || newKey >= heap->H[pos]->key)
+	{	
+		if(pos < 1)
+		{
+			cout << "(pos < 1)" << endl;
+		}
+		if(pos > heap->size )
+		{
+			cout << "(pos > heap->size )" << endl;
+		}
+		if(newKey >= heap->H[pos]->key)
+		{
+			cout << "(newKey > heap->H[pos]->key)" << endl;
+		}
 		printf("Error: invalid call to DecreaseKey\n");
-		return 1;
+		//return 0;
 		
 	}
 	//else key = newKey
 	else
 	{
+	cout << "XueDecreaseKey Success" << endl;
 	heap->H[pos]->key = newKey;
 	MovingUp(heap, V, pos);
-	return 0;	//this might need to return an int probably like a bool maybe?
+	return 1;	//this might need to return an int probably like a bool maybe?
 	}
 
 }
@@ -394,9 +412,6 @@ void HEAP::MovingDown(HEAP* a, pVERTEX* V, int pos, int flag)
 	
 	////cout << "M_testing2 " << endl;
 	//cout << "left: " << left << " right: " << right << " root " << root << endl;
-	
-	
-	
 	/************************************************************************/
 	//ELEMENT *keyPtr = new ELEMENT(); //this may be wrong
 	//float *keyPtr;
@@ -412,7 +427,7 @@ void HEAP::MovingDown(HEAP* a, pVERTEX* V, int pos, int flag)
 	//cout << "a size: " << size << " a->H[root]->key :" << a->H[root]->key << endl;
 	//Logic should be right but the pointer issue
 	//cout << "SHOULDN'T BREAK HERE " <<endl;
-	if(left >= a->size) //&& a->H[left]->key <= a->H[pos]->key)
+	if(left >= a->size && a->H[left]->key <= a->H[pos]->key)
 	{
 		////cout << "M_testing55 " << endl;
 		a->H[root] = a->H[left];
@@ -449,7 +464,7 @@ void HEAP::MovingDown(HEAP* a, pVERTEX* V, int pos, int flag)
 } //END minHeapify()
 
 
-//this might need to be change to pELEMENT HEAP::deleteMin
+/*//this might need to be change to pELEMENT HEAP::deleteMin
 pVERTEX HEAP::deleteMin(HEAP* heap, pVERTEX* V, int flag)
 {
 	pVERTEX min, last;	//might be pVERTEX or pELEMENT
@@ -479,42 +494,51 @@ pVERTEX HEAP::deleteMin(HEAP* heap, pVERTEX* V, int flag)
 
 	return min;
 	}
-}
+}*/
 
-void HEAP::minHeap(HEAP* heap, int index)
+void HEAP::minHeap(HEAP* heap, pVERTEX* V, int index)
 {
-	int smallest;
-	int newLeft, newRight;
+	int smallest = index;
+	
 
 	int left = gLeft(index);
 	int right = gRight(index);
-	int root = index;
+	//int root = index;
 
-	if(left <= heap->size && heap->H[left]->key <= heap->H[index]->key)
+	if(heap->size != 1)
 	{
-		smallest = left;
-	}
-	else
-	{
-		smallest = index;
-	}
-	if(right <= heap->size && heap->H[right]->key < heap->H[smallest]->key)
-	{
-		smallest = right;
-	}
+		cout << "HEAP SIZE IS ONE DUMBASS" << endl;
+	
+		if(left <= heap->size && heap->H[left]->key <= heap->H[index]->key)
+		{
+			//heap->H[smallest] = heap->H[left]; 
+			smallest = left;
+		}
+		else
+		{	
+			//heap->H[smallest] = heap->H[index];
+			smallest = index;
+		}
+		if(right <= heap->size && heap->H[right]->key < heap->H[smallest]->key)
+		{
+			//heap->H[smallest] = heap->H[right]; 
+			smallest = right;
+		}
+		if(smallest != index)
+		{
+			/*pELEMENT element = heap->H[smallest];
+			heap->H[smallest] = heap->H[index];
+			heap->H[index] = element;
 
-	if(smallest != 1)
-	{
-		pELEMENT element = heap->H[smallest];
-		heap->H[smallest] = heap->H[index];
-		heap->H[index] = element;
+			element = heap->H[smallest];
+			heap->H[smallest] = heap->H[index];
+			heap->H[index] = element;*/
 
-		element = heap->H[smallest];
-		heap->H[smallest] = heap->H[index];
-		heap->H[index] = element;
-
-		minHeap(heap,smallest);
-
+			std::swap(heap->H[index], heap->H[smallest]);
+			std::swap(V[heap->H[index]->vertex]->pos, V[heap->H[smallest]->vertex]->pos);
+			std::swap(heap->H[smallest]->key, heap->H[index]->key);
+			minHeap(heap, V, smallest);
+		}
 	}
 }
 
@@ -528,14 +552,14 @@ pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
 		return NULL;
 	}
 
-	else
-	{
+	
 		min = heap->H[1];
 		last = heap->H[heap->size--];
 		heap->H[1] = last;
 
 		V[heap->H[1]->vertex]->pos = 1;
-		heap->minHeapify(heap, min->vertex);	
-	}
-}
+		heap->minHeap(heap, V, min->vertex);	
+		V[min->vertex]->pos = 0;
 
+		return min;
+}
