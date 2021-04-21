@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
             v_scanf = scanf("%d%d%d", &source_new, &destination_new, &flag_new);
             if(v_scanf !=3)
             {
-                printf("ErrorGLX3: wrong return value for scanf\n");
+                //printf("ErrorGLX3: wrong return value for scanf\n");
                 continue;
             }
             /******************************************************************************

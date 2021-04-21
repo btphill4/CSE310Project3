@@ -279,7 +279,7 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
       
       if(u == destination)
       {  
-         cout << "U == DESINTATION" << endl;
+         //cout << "U == DESINTATION" << endl;
          break; //source found
       }
 
@@ -452,7 +452,8 @@ void printPath(int n, int source, pVERTEX* V, int destination, int s, int t)
    }
    else if(V[t]->color == 1)
    {
-      printf("Path not known to be shortest: <%d", s);
+      printf("Path not known to be shortest: <%d, %d", s,t);
+      //printf("Path not known to be shortest: <%d", s);
    }
    else if(V[t]->color == 2)
    {

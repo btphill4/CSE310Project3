@@ -1,7 +1,7 @@
-EXEC = djikstra
-CC = g++ -O4
-CFLAGS = -c -Wall
-# $(EXEC) has the value of shell variable EXEC, which is run.
+EXEC = dijkstra
+CC = g++ 
+CFLAGS = -c 
+# $(EXEC) has the value of shell variable EXEC, which is run. CC = g++ -04 CFLAGS = -c -Wall
 # run depends on the files main.o util.o heap.o
 $(EXEC) :Main.o Util.o Heap.o Graph.o
 # run is created by the command g++ -o run main.o util.o

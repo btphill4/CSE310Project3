@@ -1,1 +1,1 @@
-./dijksrta network02.txt directed < input13.txt > output13.txt
+./dijkstra network02.txt undirected < input13.txt > output13.txt
