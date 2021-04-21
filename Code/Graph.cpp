@@ -227,7 +227,6 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
       //V[i]->dist = INF;
    }
    
-
    //set source node to default source values
    V[source]->color = 1;   //grey color
    //V[source]->pi = 0;
@@ -236,7 +235,6 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
    //heap and element data structures 
    HEAP* heap = heap->initialize(n);
 
-   
    //create element pointer 
    //element = (ELEMENT *) malloc(sizmaeof(ELEMENT));
     
@@ -255,10 +253,13 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
    { 
       printf("Insert vertex %d, key=%12.4f\n", element->vertex, element->key); 
    }
-
+   
    //cout << "D_Testing6" << endl;
    while(heap->size != 0)
    {  
+      //cout << "while(heap) loop" << endl;
+
+
       //element = heap->deleteMin(heap, V, f);
        //heap->heapPrint(heap); 
       //cout << "DELETEMIN CALL " << endl;
@@ -276,16 +277,6 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
 
       V[u]->color = 2;  //searched AND ADDED 
       
-      
-      //==================what I was doing====================
-      //the destination is found
-      /*if(element->vertex == destination)
-      {
-         //V[u]->color == 2;
-         //cout << "D_Testing10" << endl;
-         break;
-      }*/
-      //other method//
       if(u == destination)
       {  
          cout << "U == DESINTATION" << endl;
@@ -313,9 +304,7 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
             V[v]->dist = V[u]->dist + w;
             
 
-            
-
-            //V[v]->pos = heap->size + 1;
+            V[v]->pos = heap->size + 1;
             //cout << "D_Testing14" << endl;
             
             //element = (VERTEX *) malloc(sizeof(VERTEX));
@@ -326,9 +315,9 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
             //cout << "D_Testing15" << endl;
             heap->insert(heap, V, element); 
             
-            cout << endl;
+         /*   cout << endl;
             heap->heapPrint(heap);
-            cout << endl;
+            cout << endl; */
             
             //cout << "HEAP PRINT INSIDE OF V[v]->color == 0" << endl;
             // //heap->heapPrint(heap); 
@@ -343,65 +332,55 @@ int dijkstra(int n, pNODE* A, pVERTEX* V, int source, int destination, int f)
                cout << "V[" << v << "].dist: " << V[v]->dist << endl;
                cout << endl*/
                // //heap->heapPrint(heap);
+               
             }
             
             //end if
-
             //cout << endl <<"If DecreaseKeyCheck: V[v]-> dist: " << V[v]->dist << "| V[u]->dist + w: " << V[u]->dist + w << endl;
             //if node is already checked
-            else if(V[v]->dist > V[u]->dist + w)
-            //else //(V[v]->dist > V[u]->dist + w)
+         }
+         else if(V[v]->dist > V[u]->dist + w)
+         //else
+         {   
+            if(f == 1)
             {
-               oldKey = V[v]->dist;
-               V[v]->dist = V[u]->dist + w;
-               V[v]->pi = u;
-               
-               if (f == 1)
-                    printf("Decrease key of vertex %d, from\t %12.4f to \t %12.4f \n",v,oldKey,V[v]->dist);
-
-               heap->xueDecreaseKey(heap, V, V[v]->pos, V[v]->dist);
-                
+               //print insertion information
+               //printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
+               printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
+            }
+            //sets the next nodes values to the current 
+            //cout << "D_Testing16" << endl;
+            oldKey = V[v]->dist;
+            V[v]->dist = V[u]->dist + w; //I think w should be called from V[u]->w or something
+            V[v]->pi = u;
             
-               /*
-               //sets the next nodes values to the current 
-               //cout << "D_Testing16" << endl;
-               oldKey = V[v]->dist;
-               V[v]->dist = V[u]->dist + w; //I think w should be called from V[u]->w or something
-               V[v]->pi = u;
-
-               //position maintence
-               //pos = V[v]->pos; //<------- this may still be needed
-               //cout << "D_Testing17" << endl;
-               
-               
-
-               heap->xueDecreaseKey(heap, V, V[v]->pos, V[v]->dist);
-
-               if(f == 1)
-               {
-                  //print insertion information
-                  //printf("Updated V[%d].dist from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
-                  printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", v, V[v]->dist, V[u]->dist+w);
-               }*/
-            }//end else if
-
+            //position maintence
+            //pos = V[v]->pos; //<------- this may still be needed
+            //cout << "D_Testing17" << endl;
+            
+            
+            heap->xueDecreaseKey(heap, V, V[v]->pos, V[v]->dist);
+            //cout << "LEAVE DECREASEKEY()" << endl;
+            //return 1;
+         }//end else if
             //else move to next node
             //cout << "node -> next: " << node->next << endl;
 
             //cout << "Enter Next Node" << endl;
-            
-         }//end if(color == 0)   
          node = node -> next;
-         
-         
-         //return 0; //need to return something I THINK FOR QUERY LOOP
-      }//end while(!NODE)
+            
+      }//while(node!)  
 
-   }//end while(heap->size)
-
+         
+         //return 1; //need to return something I THINK FOR QUERY LOOP
+   }//end while(!HEAP)
    //cout << endl <<"END DIJIKSTRAS" << endl;
    return 1;
-}//end dijkstras
+}////end dijkstras
+
+   
+   
+
 /** 
 For "Write Path" in main
 Write path scans for &s_new(new source node) and &t_new(new destination node)  

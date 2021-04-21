@@ -274,14 +274,15 @@ int HEAP::insert(HEAP* heap, pVERTEX* V, pELEMENT obj)
 	if(heap->size >= heap->capacity)
 	{
 		printf("Error in HeapInsert: Heap full...\n");
-		return 0;
+		return 1;
 	}
 	heap->size++;
 	heap->H[heap->size] = obj; 
 	heap->H[heap->size]->pos = heap->size;
 	//another version
-	V[heap->H[heap->size]->vertex]->pos = heap->size;
+	//V[heap->H[heap->size]->vertex]->pos = heap->size;
 
+	//cout << "Before Moving Up" << endl;
 	MovingUp(heap, V, heap->size);
 	return 1;
 
@@ -306,56 +307,66 @@ void heapFree(HEAP *heap) //still probably wrong
 //int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, int newKey)
 int	HEAP::xueDecreaseKey(HEAP* heap, pVERTEX* V, int pos, float newKey)
 {
-	/*cout << "pos: " << pos << endl;
+	/*cout << endl <<"BEFORE HEAPxueDecreseKey" << endl;  
+	cout << "pos: " << pos << endl;
 	cout << "heap->size: " << heap->size << endl;
 	cout << "newKey: " << newKey << endl;
-	cout << "Heap key: " << heap->H[pos]->key << endl;*/
+	cout << "Heap key: " << heap->H[pos]->key << endl << endl;*/
+
 	//if the position is the min OR is bigger than the heap size OR the new key is equal to old key
+	//cout << "(pos > heap->size )" << pos << "<" << heap->size << endl;
 	if(pos < 1 || pos > heap->size || newKey >= heap->H[pos]->key)
 	{	
+		/*cout << "uhhhh" << endl;
 		if(pos < 1)
 		{
 			cout << "(pos < 1)" << endl;
 		}
 		if(pos > heap->size )
 		{
-			cout << "(pos > heap->size )" << endl;
+			cout << "(pos > heap->size )" << pos << "<" << heap->size << endl;
 		}
 		if(newKey >= heap->H[pos]->key)
 		{
 			cout << "(newKey > heap->H[pos]->key)" << endl;
-		}
+		}*/
 		printf("Error: invalid call to DecreaseKey\n");
 		//return 0;
 		
 	}
-	//else key = newKey
+	//else set key = newKey
 	else
 	{
-	cout << "XueDecreaseKey Success" << endl;
+	//cout << "XueDecreaseKey Success" << endl;
 	heap->H[pos]->key = newKey;
+	//cout << "before moving up =======================new heap->H[pos]->key: " << heap->H[pos]->key << endl;
 	MovingUp(heap, V, pos);
-	return 1;	//this might need to return an int probably like a bool maybe?
+	//eturn 1;	//this might need to return an int probably like a bool maybe?
 	}
-
+	return 1;
 }
 
 //Moving up moves the element to its new position and sets it parents values
 void HEAP::MovingUp (HEAP *heap, pVERTEX* V, int pos)
 {
+	//cout << "Moving up segfault" << endl;
+
 	//declare variables
 	int parent;
 	pELEMENT temp; //might need to change 
 
 	parent = pos/2; 
-
+	//cout << endl << "do I reach this tho" << endl;
 	/*
 	Check if int pos > 1 {1,2,3...} else out of bounds
 	and that the new elements new position has a higher key value(moving UP)
 	and sets the position and new key value accordingly
 	*/
-	if(pos>1 && heap->H[pos]->key < heap->H[parent]->key)
+	//cout << "CURRENT POSITION: " << pos << endl;
+	//cout <<  " heap->H[pos]->key: " << heap->H[pos]->key << " < heap->H[parent]->key: " << heap->H[parent]->key << endl;
+	if(pos > 1 && heap->H[pos]->key < heap->H[parent]->key)
 	{	
+		//cout << "ENTER MovingUp" << endl;
 		//temporary variable to hold current position integer
 		temp = heap->H[pos];
 
@@ -429,37 +440,37 @@ void HEAP::MovingDown(HEAP* a, pVERTEX* V, int pos, int flag)
 	//cout << "SHOULDN'T BREAK HERE " <<endl;
 	if(left >= a->size && a->H[left]->key <= a->H[pos]->key)
 	{
-		////cout << "M_testing55 " << endl;
+		//cout << "M_testing55 " << endl;
 		a->H[root] = a->H[left];
 		//root = left;
 	}
 	/*if(a->H[left]->key <= a->H[pos]->key) //&& a->H[left]->key <= a->H[pos]->key)
 	{
-		////cout << "M_testing55 " << endl;
+		//cout << "M_testing55 " << endl;
 		a->H[root] = a->H[left];
 		//root = left;
 	}*/
 	else
 	{
-		////cout << "M_testing66 " << endl;
+		//cout << "M_testing66 " << endl;
 		a->H[root] = a->H[pos];
 		//root = i;
 	}
-	////cout << "M_testing12 " << endl;
+	//cout << "M_testing12 " << endl;
 	if(right <= a->size && a->H[right]->key <= a->H[pos]->key)
 	{
-		////cout << "M_testing7 " << endl;
+		//cout << "M_testing7 " << endl;
 		a->H[root] = a->H[right];
 		//root = right;
 	}
-	////cout << "M_testing13 " << endl;
+	//cout << "M_testing13 " << endl;
 	if(root != pos)
 	{
 		////cout << "M_testing8 " << endl;
 		eSwap(a->H[root]->key, a->H[pos]->key);
 		MovingDown(a, V, root, flag);
 	}
-	////cout << "M_testing14 " << endl;
+	//cout << "M_testing14 " << endl;
 
 } //END minHeapify()
 
@@ -505,13 +516,13 @@ void HEAP::minHeap(HEAP* heap, pVERTEX* V, int index)
 	int right = gRight(index);
 	//int root = index;
 
-	if(heap->size != 1)
-	{
-		cout << "HEAP SIZE IS ONE DUMBASS" << endl;
+	//if(heap->size != 0)
+	//{
+		//cout << "HEAP SIZE IS ONE DUMBASS" << endl;
 	
 		if(left <= heap->size && heap->H[left]->key <= heap->H[index]->key)
 		{
-			//heap->H[smallest] = heap->H[left]; 
+			//heap->H[smallest] = heap->H[left]; <-
 			smallest = left;
 		}
 		else
@@ -539,7 +550,7 @@ void HEAP::minHeap(HEAP* heap, pVERTEX* V, int index)
 			std::swap(heap->H[smallest]->key, heap->H[index]->key);
 			minHeap(heap, V, smallest);
 		}
-	}
+	//}
 }
 
 pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
@@ -551,8 +562,8 @@ pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
 		printf("Error in DeleteMin: heap empty\n");
 		return NULL;
 	}
+		//cout << endl << "BEFORE EXTRACT MIN HEAP SIZE: " << heap->size << endl;
 
-	
 		min = heap->H[1];
 		last = heap->H[heap->size--];
 		heap->H[1] = last;
@@ -560,6 +571,6 @@ pELEMENT HEAP::extractMin(HEAP* heap, pVERTEX* V)
 		V[heap->H[1]->vertex]->pos = 1;
 		heap->minHeap(heap, V, min->vertex);	
 		V[min->vertex]->pos = 0;
-
+		//cout << "After EXTRACT MIN HEAP SIZE: " << heap->size << endl << endl;
 		return min;
 }
