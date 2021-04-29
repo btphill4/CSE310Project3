@@ -88,19 +88,9 @@ class HEAP
         size = s;
     }
 
-//====================================================//
 
 
-    //Methods For project 2
-    //required methods
-    //void insert(HEAP* a, int key);
-    
-    void decreaseKey(HEAP* a, int index, int key);
-    void minHeapify(HEAP* a, int index);
-    //void HEAP::extractMin(HEAP* a, int f);
-    //Not required may not need
-    void buildMinHeap(HEAP* a);
-    void heapSort(HEAP* a);
+
     pVERTEX getHeapMin(HEAP* a);
 
 //====================================================//
@@ -111,8 +101,8 @@ class HEAP
     void MovingUp (HEAP *a, pVERTEX* V,int pos);
     void MovingDown(HEAP *a, pVERTEX* V, int pos, int flag);
     int insert(HEAP* a, pVERTEX* V, pELEMENT obj); 
-    pVERTEX deleteMin(HEAP* heap, pVERTEX* V, int flag);
     pELEMENT extractMin(HEAP* heap, pVERTEX* V);
     void minHeap(HEAP* heap, pVERTEX* V, int i);
+//====================================================//
 };
 #endif

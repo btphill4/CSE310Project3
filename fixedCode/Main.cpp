@@ -33,8 +33,6 @@ w(u,v) = weight of u and v
 //after reading n from the txt file use A = (pNode *) calloc(n+1, sizeof(pNode));
 */
 
-
-
 int main(int argc, char *argv[])
 {
     //initalizing values
@@ -170,21 +168,7 @@ int main(int argc, char *argv[])
         }//end if Undirected Graphs
 
     }//end for loop
-    /*
-    //BGN for adjacency lists
-    for(i = 1; i<=n; i++)
-    {
-        printf("Node %d:", i);
-        node = A[i];
-        while(node)
-        {
-            printf("-->|%d %4.1f| ", node->v, node->w);
-            node = node->next;
-        }
-        printf("\n");
-    }
-    //Checking adjacency list, Bug checking
-    */
+    
 
     //close the input file;
     fclose(ifile);
