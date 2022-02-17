@@ -11,6 +11,7 @@ $(EXEC) :Main.o Util.o Heap.o Graph.o
 Main.o : Main.cpp Util.h Heap.h Graph.h 
 # main.o is created by the command g++ -c -Wall main.cpp
 # note that the TAB before $(CC) is REQUIRED...
+
 		$(CC) $(CFLAGS) Main.cpp
 Util.o : Util.h Util.cpp
 		$(CC) $(CFLAGS) Util.cpp
