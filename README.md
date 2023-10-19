@@ -1,0 +1,4 @@
+# CSE310Project3 - Dijkstra's Algorithm
+This CSE310 class project utilizes Dijkstra's Algorithm to iterate through value points and find the shortest path between each node. This project was implemented using C++ and utilized heaps, graphs, and iostreams to properly iterate each node value. By assigning each node to a color, white (unchecked), grey (in progress), and black (checked), the algorithm would decide if the source node and destination node corresponded with the shortest path. The heap data structure was created by hand to the nodes the algorithm was currently checking, set the values and then clear the heap data structure for the next set of nodes. 
+
+The program can be run by calling `Make` to generate updated executable objects and then `./dijkstra network01.txt` or `./dijkstra network02.txt`
